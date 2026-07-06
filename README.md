@@ -1,18 +1,12 @@
 # n8n-nodes-bredbox
 
-This is an n8n community node. It lets you use _app/service name_ in your n8n workflows.
+This is an n8n community node that lets you use [Bredbox](https://bredbox.app) in your n8n workflows.
 
-_App/service name_ is _one or two sentences describing the service this node integrates with_.
+Bredbox is a read-it-later and knowledge management service that lets you save, organize, annotate, and search web content. With this node you can automate managing saves, collections, highlights, tags, tokens, webhooks, and more directly from your n8n workflows.
+
+**This node requires a [Bredbox Pro](https://bredbox.app/pricing) subscription.**
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
-
-[Installation](#installation)
-[Operations](#operations)
-[Credentials](#credentials)
-[Compatibility](#compatibility)
-[Usage](#usage)
-[Resources](#resources)
-[Version history](#version-history)
 
 ## Installation
 
@@ -20,27 +14,47 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ## Operations
 
-_List the operations supported by your node._
+| Resource | Operations |
+|---|---|
+| Save | Create, Delete, Get, Get Content, Get Many, Get Tags, Search, Set Tags, Update |
+| Highlight | Create, Delete, Get Many |
+| Import | Create, Get Many |
+| Export | Create, Download, Get Many |
+| Tag | Get Many, Get Saves |
+| Collection | Add Item, Create, Delete, Delete Item, Get, Get Item, Get Items, Get Many, Update, Update Item |
+| Me | Clear Data, Confirm Privacy Action, Delete Account, Get Job, Get Profile |
+| Token | Create, Delete, Get, Get Many, Get Scopes, Regenerate, Update |
+| Webhook | Create, Delete, Get, Get Events, Get Many, Update |
+| Authorization | Delete, Get Many |
 
 ## Credentials
 
-_If users need to authenticate with the app/service, provide details here. You should include prerequisites (such as signing up with the service), available authentication methods, and how to set them up._
+### Prerequisites
+
+- A [Bredbox](https://bredbox.app) account with a **Pro subscription**.
+- An API access token generated from your Bredbox account settings.
+
+### Setup
+
+1. Open a Bredbox node in n8n.
+2. Create a new credential of type **Bredbox API**.
+3. Paste your access token into the **Access Token** field.
+4. Optionally, change the **API Base URL** if you are running a local development instance of the Bredbox API.
 
 ## Compatibility
 
-_State the minimum n8n version, as well as which versions you test against. You can also include any known version incompatibility issues._
+Requires n8n version 1.0 or later. Tested against the Bredbox API v2.
 
 ## Usage
 
-_This is an optional section. Use it to help users with any difficult or confusing aspects of the node._
-
-_By the time users are looking for community nodes, they probably already know n8n basics. But if you expect new users, you can link to the [Try it out](https://docs.n8n.io/try-it-out/) documentation to help them get started._
+You can configure the API base URL on the credential to point to a local Bredbox instance during development. The default is `https://api.bredbox.app/v2`.
 
 ## Resources
 
-* [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-* _Link to app/service documentation._
+- [Bredbox](https://bredbox.app)
+- [Bredbox API documentation](https://api.bredbox.app/v2/openapi.json)
+- [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
 
 ## Version history
 
-_This is another optional section. If your node has multiple versions, include a short description of available versions and what changed, as well as any compatibility impact._
+See [CHANGELOG.md](./CHANGELOG.md).

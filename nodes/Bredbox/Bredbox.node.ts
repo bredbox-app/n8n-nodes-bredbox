@@ -27,7 +27,7 @@ export class Bredbox implements INodeType {
 		outputs: [NodeConnectionTypes.Main],
 		credentials: [{ name: 'bredboxApi', required: true }],
 		requestDefaults: {
-			baseURL: 'https://api.bredbox.app/v2',
+			baseURL: '={{$credentials.baseUrl}}',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',

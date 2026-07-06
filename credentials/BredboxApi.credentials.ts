@@ -13,9 +13,17 @@ export class BredboxApi implements ICredentialType {
 
 	icon: Icon = 'file:../nodes/Bredbox/bredbox.svg';
 
-	documentationUrl = 'https://github.com/bredbox-app/n8n-nodes-bredbox?tab=readme-ov-file#credentials';
+	documentationUrl =
+		'https://github.com/bredbox-app/n8n-nodes-bredbox?tab=readme-ov-file#credentials';
 
 	properties: INodeProperties[] = [
+		{
+			displayName: 'API Base URL',
+			name: 'baseUrl',
+			type: 'string',
+			default: 'https://api.bredbox.app/v2',
+			description: 'The base URL of the Bredbox API. Change this for local development.',
+		},
 		{
 			displayName: 'Access Token',
 			name: 'accessToken',
@@ -37,7 +45,7 @@ export class BredboxApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://api.bredbox.app/v2',
+			baseURL: '={{$credentials.baseUrl}}',
 			url: '/me',
 			method: 'GET',
 		},
