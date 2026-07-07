@@ -19,8 +19,8 @@ export const highlightDescription: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'List highlights for a specific save',
-				description: 'List highlights for a specific save',
+				action: 'Get many highlights',
+				description: 'Retrieve all highlights with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -41,8 +41,8 @@ export const highlightDescription: INodeProperties[] = [
 			{
 				name: 'Create',
 				value: 'create',
-				action: 'Create a new highlight for a save',
-				description: 'Create a new highlight for a save',
+				action: 'Create a highlight',
+				description: 'Create a new highlight',
 				routing: {
 					request: {
 						method: 'POST',
@@ -54,7 +54,7 @@ export const highlightDescription: INodeProperties[] = [
 				name: 'Delete',
 				value: 'delete',
 				action: 'Delete a highlight',
-				description: 'Delete a highlight',
+				description: 'Delete a highlight permanently',
 				routing: {
 					request: {
 						method: 'DELETE',

@@ -20,8 +20,8 @@ export const webhookDescription: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'List webhooks',
-				description: 'Returns a paginated list of webhooks owned by the authenticated user. Requires `webhooks:read` scope and the `developer` entitlement.',
+				action: 'Get many webhooks',
+				description: 'Retrieve all webhooks with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -42,8 +42,8 @@ export const webhookDescription: INodeProperties[] = [
 			{
 				name: 'Get',
 				value: 'get',
-				action: 'Get a webhook by ID',
-				description: 'Returns one webhook owned by the authenticated user, including the 10 most recent delivery attempts. Requires `webhooks:read` scope and the `developer` entitlement.',
+				action: 'Get a webhook',
+				description: 'Retrieve a single webhook by ID',
 				routing: {
 					request: {
 						method: 'GET',
@@ -54,8 +54,8 @@ export const webhookDescription: INodeProperties[] = [
 			{
 				name: 'Get Events',
 				value: 'getEvents',
-				action: 'List available webhook event types',
-				description: 'Returns the stable v1 webhook event catalog used for outbound deliveries. Requires `webhooks:read` scope and the `developer` entitlement.',
+				action: 'Get available events',
+				description: 'Retrieve all available webhook event types',
 				routing: {
 					request: {
 						method: 'GET',
@@ -76,8 +76,8 @@ export const webhookDescription: INodeProperties[] = [
 			{
 				name: 'Create',
 				value: 'create',
-				action: 'Create webhook',
-				description: 'Creates a webhook for the authenticated user. Requires `webhooks:write` scope and the `developer` entitlement.',
+				action: 'Create a webhook',
+				description: 'Create a new webhook',
 				routing: {
 					request: {
 						method: 'POST',
@@ -89,7 +89,7 @@ export const webhookDescription: INodeProperties[] = [
 				name: 'Update',
 				value: 'update',
 				action: 'Update a webhook',
-				description: 'Updates mutable webhook fields (including status for enable/disable). Requires `webhooks:write` scope and the `developer` entitlement.',
+				description: 'Update a webhook\'s properties',
 				routing: {
 					request: {
 						method: 'PATCH',
@@ -101,7 +101,7 @@ export const webhookDescription: INodeProperties[] = [
 				name: 'Delete',
 				value: 'delete',
 				action: 'Delete a webhook',
-				description: 'Deletes a webhook owned by the authenticated user.',
+				description: 'Delete a webhook permanently',
 				routing: {
 					request: {
 						method: 'DELETE',

@@ -23,8 +23,8 @@ export const collectionDescription: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'List user collections with pagination and optional membership check',
-				description: 'List user collections with pagination and optional membership check',
+				action: 'Get many collections',
+				description: 'Retrieve all collections with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -45,8 +45,8 @@ export const collectionDescription: INodeProperties[] = [
 			{
 				name: 'Get',
 				value: 'get',
-				action: 'Get a single collection owned by the current user',
-				description: 'Get a single collection owned by the current user',
+				action: 'Get a collection',
+				description: 'Retrieve a single collection by ID',
 				routing: {
 					request: {
 						method: 'GET',
@@ -57,8 +57,8 @@ export const collectionDescription: INodeProperties[] = [
 			{
 				name: 'Get Items',
 				value: 'getItems',
-				action: 'List items in a collection',
-				description: 'List items in a collection',
+				action: 'Get items',
+				description: 'Retrieve all items in a collection',
 				routing: {
 					request: {
 						method: 'GET',
@@ -79,8 +79,8 @@ export const collectionDescription: INodeProperties[] = [
 			{
 				name: 'Get Item',
 				value: 'getItem',
-				action: 'Get a single collection item',
-				description: 'Get a single collection item',
+				action: 'Get an item',
+				description: 'Retrieve a single item from a collection',
 				routing: {
 					request: {
 						method: 'GET',
@@ -91,7 +91,7 @@ export const collectionDescription: INodeProperties[] = [
 			{
 				name: 'Create',
 				value: 'create',
-				action: 'Create a new collection',
+				action: 'Create a collection',
 				description: 'Create a new collection',
 				routing: {
 					request: {
@@ -103,7 +103,7 @@ export const collectionDescription: INodeProperties[] = [
 			{
 				name: 'Add Item',
 				value: 'addItem',
-				action: 'Add a save to a collection',
+				action: 'Add an item to collection',
 				description: 'Add a save to a collection',
 				routing: {
 					request: {
@@ -116,7 +116,7 @@ export const collectionDescription: INodeProperties[] = [
 				name: 'Update',
 				value: 'update',
 				action: 'Update a collection',
-				description: 'Update a collection',
+				description: 'Update a collection\'s properties',
 				routing: {
 					request: {
 						method: 'PATCH',
@@ -127,8 +127,8 @@ export const collectionDescription: INodeProperties[] = [
 			{
 				name: 'Update Item',
 				value: 'updateItem',
-				action: 'Update a collection item (reorder and/or set note)',
-				description: 'Update a collection item (reorder and/or set note)',
+				action: 'Update an item in collection',
+				description: 'Reorder or change a note on a collection item',
 				routing: {
 					request: {
 						method: 'PATCH',
@@ -140,7 +140,7 @@ export const collectionDescription: INodeProperties[] = [
 				name: 'Delete',
 				value: 'delete',
 				action: 'Delete a collection',
-				description: 'Delete a collection',
+				description: 'Delete a collection permanently',
 				routing: {
 					request: {
 						method: 'DELETE',
@@ -151,7 +151,7 @@ export const collectionDescription: INodeProperties[] = [
 			{
 				name: 'Delete Item',
 				value: 'deleteItem',
-				action: 'Remove a save from a collection',
+				action: 'Remove an item from collection',
 				description: 'Remove a save from a collection',
 				routing: {
 					request: {

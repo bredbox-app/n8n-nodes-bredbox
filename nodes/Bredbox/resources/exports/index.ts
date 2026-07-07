@@ -17,8 +17,8 @@ export const exportDescription: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'List user exports with pagination',
-				description: 'Returns the authenticated user\'s exports ordered by creation date. Includes download links for ready exports.',
+				action: 'Get many exports',
+				description: 'Retrieve all exports with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -39,8 +39,8 @@ export const exportDescription: INodeProperties[] = [
 			{
 				name: 'Download',
 				value: 'download',
-				action: 'Download a user export archive',
-				description: 'Download a ready export as a ZIP file. Requires authentication and ownership of the export.',
+				action: 'Download export',
+				description: 'Download a completed export archive',
 				routing: {
 					request: {
 						method: 'GET',
@@ -52,8 +52,8 @@ export const exportDescription: INodeProperties[] = [
 			{
 				name: 'Create',
 				value: 'create',
-				action: 'Create a new data export',
-				description: 'Initiate a full data export (saves, collections, and tags). Rate limited to one export per 24 hours.',
+				action: 'Create a export',
+				description: 'Create a new export',
 				routing: {
 					request: {
 						method: 'POST',

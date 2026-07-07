@@ -52,9 +52,5 @@ You can configure the API base URL on the credential to point to a local Bredbox
 ## Resources
 
 - [Bredbox](https://bredbox.app)
-- [Bredbox API documentation](https://api.bredbox.app/v2/openapi.json)
+- [Bredbox API documentation](https://api.bredbox.app/v2/docs)
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-
-## Version history
-
-See [CHANGELOG.md](./CHANGELOG.md).

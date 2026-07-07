@@ -302,7 +302,38 @@ function parseOperationId(operationId, method) {
   };
 }
 
-// ─── CODE GENERATORS ──────────────────────────────────────────────────────────
+/**
+ * Map operation value → [action text template, description text template].
+ * Both take {resource} as a replacement token.
+ * - `action`: Sentence case, includes resource, omits articles. Shown in node selector panel.
+ * - `description`: Sentence case, alternative wording, adds detail. Shown as subtext in dropdown.
+ */
+const ACTION_TEMPLATES = {
+  getAll:        ['Get many {resource}s',        'Retrieve all {resource}s with pagination'],
+  get:           ['Get a {resource}',             'Retrieve a single {resource} by ID'],
+  getContent:    ['Get {resource} content',       'Retrieve the content of a {resource}'],
+  getTags:       ['Get {resource} tags',          'Retrieve all tags on a {resource}'],
+  getSaves:      ['Get saves for {resource}',    'Retrieve all saves with a specific {resource}'],
+  getItems:      ['Get items',                    'Retrieve all items in a {resource}'],
+  getItem:       ['Get an item',                  'Retrieve a single item from a {resource}'],
+  getEvents:     ['Get available events',         'Retrieve all available webhook event types'],
+  getScopes:     ['Get available scopes',         'Retrieve all available token scopes'],
+  getJob:        ['Get job status',               'Retrieve the status of a background job'],
+  getProfile:    ['Get profile',                  'Retrieve the current user profile'],
+  create:        ['Create a {resource}',          'Create a new {resource}'],
+  update:        ['Update a {resource}',          'Update a {resource}\'s properties'],
+  delete:        ['Delete a {resource}',          'Delete a {resource} permanently'],
+  search:        ['Search {resource}s',           'Search across {resource}s using full-text query'],
+  setTags:       ['Set {resource} tags',          'Replace all tags on a {resource}'],
+  addItem:       ['Add an item to {resource}',    'Add a save to a {resource}'],
+  updateItem:    ['Update an item in {resource}', 'Reorder or change a note on a {resource} item'],
+  deleteItem:    ['Remove an item from {resource}','Remove a save from a {resource}'],
+  download:      ['Download {resource}',          'Download a completed {resource} archive'],
+  clearData:     ['Clear all user data',          'Request deletion of all user data'],
+  confirmPrivacy: ['Confirm privacy action',      'Confirm a privacy deletion request with a token'],
+  deleteAccount: ['Delete account',               'Request deletion of the user account'],
+  regenerate:    ['Regenerate {resource}',        'Regenerate an existing {resource} token'],
+};
 
 /**
  * Generate a single n8n property object (for a path param or query param).
@@ -403,8 +434,20 @@ function responseHasItems(op) {
  */
 function generateOperationOption(parsed, op, pathStr) {
   const { value, displayName, method } = parsed;
-  const summary = op.summary || displayName;
-  const description = op.description || summary;
+  const resource = parsed.resource;
+
+  // Pick action text and description from templates or fall back to OpenAPI summary
+  let actionText = '';
+  let descText = '';
+  if (ACTION_TEMPLATES[value]) {
+    const [aTmpl, dTmpl] = ACTION_TEMPLATES[value];
+    actionText = aTmpl.replace(/\{resource\}/g, resource);
+    descText = dTmpl.replace(/\{resource\}/g, resource);
+  } else {
+    // Fallback: use OpenAPI summary / description
+    actionText = (op.summary || displayName).replace(/^[a-z]/, (c) => c.toUpperCase());
+    descText = op.description || actionText;
+  }
 
   // Build the routing URL
   let urlPath = pathStr.replace(/\{([^}]+)\}/g, (_, name) => `{{$parameter.${name}}}`);
@@ -416,8 +459,8 @@ function generateOperationOption(parsed, op, pathStr) {
   lines.push('{');
   lines.push(`\tname: '${esc(displayName)}',`);
   lines.push(`\tvalue: '${esc(value)}',`);
-  lines.push(`\taction: '${esc(summary)}',`);
-  lines.push(`\tdescription: '${esc(description)}',`);
+  lines.push(`\taction: '${esc(actionText)}',`);
+  lines.push(`\tdescription: '${esc(descText)}',`);
   lines.push('\trouting: {');
   lines.push('\t\trequest: {');
   lines.push(`\t\t\tmethod: '${method}',`);
@@ -870,6 +913,17 @@ function generateOpParamFile(resource, opValue, bodyParams, queryParams) {
     // description
     if (schema.description) {
       lines.push(`\t\tdescription: '${esc(schema.description)}',`);
+    } else if (n8nType === 'boolean') {
+      // UX guideline: boolean descriptions must start with "Whether..."
+      let boolDesc;
+      if (name.startsWith('is_')) {
+        boolDesc = `Whether the ${resource} is ${desc.replace(/^Is\s+/i, '').toLowerCase()}`;
+      } else if (name.startsWith('no_')) {
+        boolDesc = `Whether the ${resource} has ${desc.toLowerCase()}`;
+      } else {
+        boolDesc = `Whether to ${desc.toLowerCase()}`;
+      }
+      lines.push(`\t\tdescription: '${esc(boolDesc)}',`);
     }
     // options
     if (n8nType === 'options' && schema.enum) {

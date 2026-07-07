@@ -17,8 +17,8 @@ export const importDescription: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'List user imports with pagination',
-				description: 'Returns the authenticated user\'s imports ordered by creation date.',
+				action: 'Get many imports',
+				description: 'Retrieve all imports with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -39,8 +39,8 @@ export const importDescription: INodeProperties[] = [
 			{
 				name: 'Create',
 				value: 'create',
-				action: 'Create a new import',
-				description: 'Upload an import file and start the import process',
+				action: 'Create a import',
+				description: 'Create a new import',
 				routing: {
 					request: {
 						method: 'POST',

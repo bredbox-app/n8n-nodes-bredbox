@@ -63,6 +63,7 @@ export const tokenUpdateDescription: INodeProperties[] = [
 		name: 'no_expiration',
 		type: 'boolean',
 		default: false,
+		description: 'Whether the token has no expiration',
 		displayOptions: {
 			show: showOnlyFor,
 		},

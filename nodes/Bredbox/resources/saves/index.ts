@@ -23,8 +23,8 @@ export const saveDescription: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'List user saves with filtering and pagination',
-				description: 'List user saves with filtering and pagination',
+				action: 'Get many saves',
+				description: 'Retrieve all saves with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -45,8 +45,8 @@ export const saveDescription: INodeProperties[] = [
 			{
 				name: 'Get',
 				value: 'get',
-				action: 'Get a single user save by ID',
-				description: 'Get a single user save by ID',
+				action: 'Get a save',
+				description: 'Retrieve a single save by ID',
 				routing: {
 					request: {
 						method: 'GET',
@@ -57,8 +57,8 @@ export const saveDescription: INodeProperties[] = [
 			{
 				name: 'Get Content',
 				value: 'getContent',
-				action: 'Get content for a save',
-				description: 'Retrieves the content for a given save.',
+				action: 'Get save content',
+				description: 'Retrieve the content of a save',
 				routing: {
 					request: {
 						method: 'GET',
@@ -72,8 +72,8 @@ export const saveDescription: INodeProperties[] = [
 			{
 				name: 'Get Tags',
 				value: 'getTags',
-				action: 'Get all tags for a specific save by ID',
-				description: 'Get all tags for a specific save by ID',
+				action: 'Get save tags',
+				description: 'Retrieve all tags on a save',
 				routing: {
 					request: {
 						method: 'GET',
@@ -84,8 +84,8 @@ export const saveDescription: INodeProperties[] = [
 			{
 				name: 'Search',
 				value: 'search',
-				action: 'Search user saves with full-text search',
-				description: 'Search user saves with full-text search',
+				action: 'Search saves',
+				description: 'Search across saves using full-text query',
 				routing: {
 					request: {
 						method: 'GET',
@@ -106,8 +106,8 @@ export const saveDescription: INodeProperties[] = [
 			{
 				name: 'Create',
 				value: 'create',
-				action: 'Create a new user save',
-				description: 'Create a new user save',
+				action: 'Create a save',
+				description: 'Create a new save',
 				routing: {
 					request: {
 						method: 'POST',
@@ -118,8 +118,8 @@ export const saveDescription: INodeProperties[] = [
 			{
 				name: 'Update',
 				value: 'update',
-				action: 'Update a single user save by ID',
-				description: 'Update a single user save by ID',
+				action: 'Update a save',
+				description: 'Update a save\'s properties',
 				routing: {
 					request: {
 						method: 'PATCH',
@@ -130,8 +130,8 @@ export const saveDescription: INodeProperties[] = [
 			{
 				name: 'Set Tags',
 				value: 'setTags',
-				action: 'Set all tags for a specific save by ID',
-				description: 'Set all tags for a specific save by ID',
+				action: 'Set save tags',
+				description: 'Replace all tags on a save',
 				routing: {
 					request: {
 						method: 'PUT',
@@ -142,8 +142,8 @@ export const saveDescription: INodeProperties[] = [
 			{
 				name: 'Delete',
 				value: 'delete',
-				action: 'Delete a single user save by ID',
-				description: 'Delete a single user save by ID',
+				action: 'Delete a save',
+				description: 'Delete a save permanently',
 				routing: {
 					request: {
 						method: 'DELETE',

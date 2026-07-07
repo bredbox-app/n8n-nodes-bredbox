@@ -20,8 +20,8 @@ export const tokenDescription: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'List API tokens',
-				description: 'List API tokens',
+				action: 'Get many tokens',
+				description: 'Retrieve all tokens with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -42,8 +42,8 @@ export const tokenDescription: INodeProperties[] = [
 			{
 				name: 'Get',
 				value: 'get',
-				action: 'Get an API token by ID',
-				description: 'Get an API token by ID',
+				action: 'Get a token',
+				description: 'Retrieve a single token by ID',
 				routing: {
 					request: {
 						method: 'GET',
@@ -54,8 +54,8 @@ export const tokenDescription: INodeProperties[] = [
 			{
 				name: 'Get Scopes',
 				value: 'getScopes',
-				action: 'List available API token scopes',
-				description: 'Returns the canonical scope catalog for v2 endpoints, including separate `:write` and `:delete` scopes where applicable. There is no `/v2/webhooks/scopes` endpoint.',
+				action: 'Get available scopes',
+				description: 'Retrieve all available token scopes',
 				routing: {
 					request: {
 						method: 'GET',
@@ -76,8 +76,8 @@ export const tokenDescription: INodeProperties[] = [
 			{
 				name: 'Create',
 				value: 'create',
-				action: 'Create a new API token',
-				description: 'Create a new API token',
+				action: 'Create a token',
+				description: 'Create a new token',
 				routing: {
 					request: {
 						method: 'POST',
@@ -88,8 +88,8 @@ export const tokenDescription: INodeProperties[] = [
 			{
 				name: 'Regenerate',
 				value: 'regenerate',
-				action: 'Regenerate an API token',
-				description: 'Regenerate an API token',
+				action: 'Regenerate token',
+				description: 'Regenerate an existing token token',
 				routing: {
 					request: {
 						method: 'POST',
@@ -100,8 +100,8 @@ export const tokenDescription: INodeProperties[] = [
 			{
 				name: 'Update',
 				value: 'update',
-				action: 'Update and regenerate an API token',
-				description: 'Update and regenerate an API token',
+				action: 'Update a token',
+				description: 'Update a token\'s properties',
 				routing: {
 					request: {
 						method: 'PATCH',
@@ -112,8 +112,8 @@ export const tokenDescription: INodeProperties[] = [
 			{
 				name: 'Delete',
 				value: 'delete',
-				action: 'Revoke an API token',
-				description: 'Revoke an API token',
+				action: 'Delete a token',
+				description: 'Delete a token permanently',
 				routing: {
 					request: {
 						method: 'DELETE',

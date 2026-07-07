@@ -11,6 +11,7 @@ export const saveUpdateDescription: INodeProperties[] = [
 		name: 'is_favorite',
 		type: 'boolean',
 		default: false,
+		description: 'Whether the save is favorite',
 		displayOptions: {
 			show: showOnlyFor,
 		},
@@ -27,6 +28,7 @@ export const saveUpdateDescription: INodeProperties[] = [
 		name: 'is_archived',
 		type: 'boolean',
 		default: false,
+		description: 'Whether the save is archived',
 		displayOptions: {
 			show: showOnlyFor,
 		},

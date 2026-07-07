@@ -19,8 +19,8 @@ export const meDescription: INodeProperties[] = [
 			{
 				name: 'Get Profile',
 				value: 'getProfile',
-				action: 'Get current user profile',
-				description: 'Returns account profile fields for the authenticated user. Requires the `user:read` scope and the `read` entitlement.',
+				action: 'Get profile',
+				description: 'Retrieve the current user profile',
 				routing: {
 					request: {
 						method: 'GET',
@@ -31,8 +31,8 @@ export const meDescription: INodeProperties[] = [
 			{
 				name: 'Get Job',
 				value: 'getJob',
-				action: 'Get background job status',
-				description: 'Retrieves the current status of a background job initiated by the user (e.g., account deletion, data clearance).',
+				action: 'Get job status',
+				description: 'Retrieve the status of a background job',
 				routing: {
 					request: {
 						method: 'GET',
@@ -43,8 +43,8 @@ export const meDescription: INodeProperties[] = [
 			{
 				name: 'Confirm Privacy Action',
 				value: 'confirmPrivacy',
-				action: 'Confirm a privacy deletion request',
-				description: 'Confirms a pending privacy request using the raw email token, promotes the job to pending, and enqueues background processing.',
+				action: 'Confirm privacy action',
+				description: 'Confirm a privacy deletion request with a token',
 				routing: {
 					request: {
 						method: 'POST',
@@ -55,8 +55,8 @@ export const meDescription: INodeProperties[] = [
 			{
 				name: 'Delete Account',
 				value: 'deleteAccount',
-				action: 'Delete user account',
-				description: 'Requests an email confirmation before deleting the user\'s account and all associated data. Requires the `user:delete` scope. This action is permanent once confirmed.',
+				action: 'Delete account',
+				description: 'Request deletion of the user account',
 				routing: {
 					request: {
 						method: 'DELETE',
@@ -68,7 +68,7 @@ export const meDescription: INodeProperties[] = [
 				name: 'Clear Data',
 				value: 'clearData',
 				action: 'Clear all user data',
-				description: 'Requests an email confirmation before clearing all user saved data. The account remains active after confirmation.',
+				description: 'Request deletion of all user data',
 				routing: {
 					request: {
 						method: 'DELETE',

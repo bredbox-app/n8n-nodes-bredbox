@@ -75,6 +75,7 @@ export const saveCreateDescription: INodeProperties[] = [
 		name: 'background',
 		type: 'boolean',
 		default: false,
+		description: 'Whether to background',
 		displayOptions: {
 			show: showOnlyFor,
 		},

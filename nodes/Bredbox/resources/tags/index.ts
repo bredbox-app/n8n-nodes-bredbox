@@ -17,8 +17,8 @@ export const tagDescription: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'List all tags for the authenticated user',
-				description: 'List all tags for the authenticated user',
+				action: 'Get many tags',
+				description: 'Retrieve all tags with pagination',
 				routing: {
 					request: {
 						method: 'GET',
