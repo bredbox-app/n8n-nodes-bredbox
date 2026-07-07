@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/bredbox-app/n8n-nodes-bredbox/compare/n8n-nodes-bredbox-v1.0.0...n8n-nodes-bredbox-v1.0.1) (2026-07-07)
+
+
+### Bug Fixes
+
+* Add provenance to publish ([bf50b21](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/bf50b21c3fa71f4df07578ff2bacc76ef3f8f54d))
+
 ## 1.0.0 (2026-07-07)
 
 
