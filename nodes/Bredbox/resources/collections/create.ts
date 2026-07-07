@@ -1,39 +1,40 @@
 import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyFor = {
-	operation: ['update'],
-	resource: ['save'],
+	operation: ['create'],
+	resource: ['collection'],
 };
 
-export const saveUpdateDescription: INodeProperties[] = [
+export const collectionCreateDescription: INodeProperties[] = [
 	{
-		displayName: 'Is Favorite',
-		name: 'is_favorite',
-		type: 'boolean',
-		default: false,
+		displayName: 'Name',
+		name: 'name',
+		type: 'string',
+		required: true,
+		default: '',
 		displayOptions: {
 			show: showOnlyFor,
 		},
 		routing: {
 			send: {
 				type: 'body',
-				property: 'is_favorite',
+				property: 'name',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},
 	},
 	{
-		displayName: 'Is Archived',
-		name: 'is_archived',
-		type: 'boolean',
-		default: false,
+		displayName: 'Description',
+		name: 'description',
+		type: 'string',
+		default: '',
 		displayOptions: {
 			show: showOnlyFor,
 		},
 		routing: {
 			send: {
 				type: 'body',
-				property: 'is_archived',
+				property: 'description',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},

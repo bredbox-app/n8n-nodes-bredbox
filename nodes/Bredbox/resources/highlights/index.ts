@@ -1,4 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { highlightCreateDescription } from './create';
+
 
 const showOnlyFor = {
 	resource: ['highlight'],
@@ -15,34 +17,10 @@ export const highlightDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a highlight',
-				description: 'Create a highlight on a save',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '=/saves/{{$parameter.saveId}}/highlights',
-					},
-				},
-			},
-			{
-				name: 'Delete',
-				value: 'delete',
-				action: 'Delete a highlight',
-				description: 'Delete a highlight from a save',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/saves/{{$parameter.saveId}}/highlights/{{$parameter.highlightId}}',
-					},
-				},
-			},
-			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'Get many highlights',
-				description: 'Get many highlights for a save',
+				action: 'List highlights for a specific save',
+				description: 'List highlights for a specific save',
 				routing: {
 					request: {
 						method: 'GET',
@@ -60,137 +38,111 @@ export const highlightDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Create',
+				value: 'create',
+				action: 'Create a new highlight for a save',
+				description: 'Create a new highlight for a save',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/saves/{{$parameter.saveId}}/highlights',
+					},
+				},
+			},
+			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a highlight',
+				description: 'Delete a highlight',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/saves/{{$parameter.saveId}}/highlights/{{$parameter.highlightId}}',
+					},
+				},
+			},
 		],
 		default: 'getAll',
 	},
 	{
-		displayName: 'Save ID',
-		name: 'saveId',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['highlight'],
-				operation: ['getAll', 'create', 'delete'],
-			},
+	displayName: 'Save ID',
+	name: 'saveId',
+	type: 'string',
+	required: true,
+	default: '',
+	displayOptions: {
+		show: {
+			resource: ['highlight'],
+			operation: ['getAll', 'create', 'delete'],
 		},
-		description: 'ID of the save',
 	},
+	description: 'Save ID of the highlight',
+},
 	{
-		displayName: 'Highlight ID',
-		name: 'highlightId',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['highlight'],
-				operation: ['delete'],
-			},
+	displayName: 'Highlight ID',
+	name: 'highlightId',
+	type: 'string',
+	required: true,
+	default: '',
+	displayOptions: {
+		show: {
+			resource: ['highlight'],
+			operation: ['delete'],
 		},
-		description: 'ID of the highlight to delete',
 	},
+	description: 'Highlight ID of the highlight',
+},
 	{
-		displayName: 'Text',
-		name: 'text',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['highlight'],
-				operation: ['create'],
-			},
+	displayName: 'Return All',
+	name: 'returnAll',
+	type: 'boolean',
+	default: false,
+	displayOptions: {
+		show: {
+			resource: ['highlight'],
+			operation: ['getAll'],
 		},
-		description: 'The highlighted text (max 2000 characters)',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'text',
+	},
+	description: 'Whether to return all results or only up to a given limit',
+	routing: {
+		send: {
+			paginate: '={{ $value }}',
+		},
+		operations: {
+			pagination: {
+				type: 'offset',
+				properties: {
+					limitParameter: 'per_page',
+					offsetParameter: 'page',
+					pageSize: 30,
+					type: 'query',
+				},
 			},
 		},
 	},
-	{
-		displayName: 'Start Path',
-		name: 'start_path',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['highlight'],
-				operation: ['create'],
-			},
-		},
-		description: 'JSON array of numbers representing the start location path (e.g. [0,1,2])',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'start_path',
-				value: '={{ JSON.parse($value) }}',
-			},
+},
+{
+	displayName: 'Limit',
+	name: 'limit',
+	type: 'number',
+	default: 30,
+	displayOptions: {
+		show: {
+			resource: ['highlight'],
+			operation: ['getAll'],
 		},
 	},
-	{
-		displayName: 'Start Offset',
-		name: 'start_offset',
-		type: 'number',
-		required: true,
-		default: 0,
-		displayOptions: {
-			show: {
-				resource: ['highlight'],
-				operation: ['create'],
-			},
-		},
-		description: 'Character offset within the start node',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'start_offset',
-			},
+	description: 'Max number of results to return',
+	typeOptions: {
+		minValue: 1,
+	},
+	routing: {
+		send: {
+			type: 'query',
+			property: 'per_page',
 		},
 	},
-	{
-		displayName: 'End Path',
-		name: 'end_path',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['highlight'],
-				operation: ['create'],
-			},
-		},
-		description: 'JSON array of numbers representing the end location path (e.g. [0,1,5])',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'end_path',
-				value: '={{ JSON.parse($value) }}',
-			},
-		},
-	},
-	{
-		displayName: 'End Offset',
-		name: 'end_offset',
-		type: 'number',
-		required: true,
-		default: 0,
-		displayOptions: {
-			show: {
-				resource: ['highlight'],
-				operation: ['create'],
-			},
-		},
-		description: 'Character offset within the end node',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'end_offset',
-			},
-		},
-	},
+},
+	...highlightCreateDescription,
 ];

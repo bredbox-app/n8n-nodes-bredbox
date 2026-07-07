@@ -1,14 +1,14 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
-import { saveDescription } from './resources/saves';
+import { authorizationDescription } from './resources/authorizations';
+import { collectionDescription } from './resources/collections';
+import { exportDescription } from './resources/exports';
 import { highlightDescription } from './resources/highlights';
 import { importDescription } from './resources/imports';
-import { exportDescription } from './resources/exports';
-import { tagDescription } from './resources/tags';
-import { collectionDescription } from './resources/collections';
 import { meDescription } from './resources/me';
+import { saveDescription } from './resources/saves';
+import { tagDescription } from './resources/tags';
 import { tokenDescription } from './resources/tokens';
 import { webhookDescription } from './resources/webhooks';
-import { authorizationDescription } from './resources/authorizations';
 
 export class Bredbox implements INodeType {
 	description: INodeTypeDescription = {
@@ -83,16 +83,16 @@ export class Bredbox implements INodeType {
 				],
 				default: 'save',
 			},
-			...saveDescription,
+			...authorizationDescription,
+			...collectionDescription,
+			...exportDescription,
 			...highlightDescription,
 			...importDescription,
-			...exportDescription,
-			...tagDescription,
-			...collectionDescription,
 			...meDescription,
+			...saveDescription,
+			...tagDescription,
 			...tokenDescription,
 			...webhookDescription,
-			...authorizationDescription,
 		],
 	};
 }

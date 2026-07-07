@@ -1,27 +1,24 @@
 import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyFor = {
-	operation: ['setTags'],
-	resource: ['save'],
+	operation: ['confirmPrivacy'],
+	resource: ['me'],
 };
 
-export const saveSetTagsDescription: INodeProperties[] = [
+export const meConfirmPrivacyDescription: INodeProperties[] = [
 	{
-		displayName: 'Tags',
-		name: 'tags',
+		displayName: 'Token',
+		name: 'token',
 		type: 'string',
 		required: true,
-		default: [],
-		typeOptions: {
-			multipleValues: true,
-		},
+		default: '',
 		displayOptions: {
 			show: showOnlyFor,
 		},
 		routing: {
 			send: {
 				type: 'body',
-				property: 'tags',
+				property: 'token',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},

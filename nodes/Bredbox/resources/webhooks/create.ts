@@ -2,14 +2,32 @@ import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyFor = {
 	operation: ['create'],
-	resource: ['save'],
+	resource: ['webhook'],
 };
 
-export const saveCreateDescription: INodeProperties[] = [
+export const webhookCreateDescription: INodeProperties[] = [
+	{
+		displayName: 'Name',
+		name: 'name',
+		type: 'string',
+		required: true,
+		default: '',
+		displayOptions: {
+			show: showOnlyFor,
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'name',
+				value: '={{$value ? $value : undefined}}',
+			},
+		},
+	},
 	{
 		displayName: 'URL',
 		name: 'url',
 		type: 'string',
+		required: true,
 		default: '',
 		displayOptions: {
 			show: showOnlyFor,
@@ -23,9 +41,10 @@ export const saveCreateDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Content ID',
-		name: 'content_id',
+		displayName: 'Secret',
+		name: 'secret',
 		type: 'string',
+		required: true,
 		default: '',
 		displayOptions: {
 			show: showOnlyFor,
@@ -33,55 +52,48 @@ export const saveCreateDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'content_id',
+				property: 'secret',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},
 	},
 	{
-		displayName: 'Title',
-		name: 'title',
+		displayName: 'Subscription Mode',
+		name: 'subscription_mode',
+		type: 'options',
+		required: true,
+		default: 'explicit',
+		options: [
+			{ name: 'Explicit', value: 'explicit' },
+			{ name: 'All_events', value: 'all_events' },
+		],
+		displayOptions: {
+			show: showOnlyFor,
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'subscription_mode',
+				value: '={{$value ? $value : undefined}}',
+			},
+		},
+	},
+	{
+		displayName: 'Event Types',
+		name: 'event_types',
 		type: 'string',
-		default: '',
+		required: true,
+		default: [],
+		typeOptions: {
+			multipleValues: true,
+		},
 		displayOptions: {
 			show: showOnlyFor,
 		},
 		routing: {
 			send: {
 				type: 'body',
-				property: 'title',
-				value: '={{$value ? $value : undefined}}',
-			},
-		},
-	},
-	{
-		displayName: 'HTML',
-		name: 'html',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: showOnlyFor,
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'html',
-				value: '={{$value ? $value : undefined}}',
-			},
-		},
-	},
-	{
-		displayName: 'Background',
-		name: 'background',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show: showOnlyFor,
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'background',
+				property: 'event_types',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},

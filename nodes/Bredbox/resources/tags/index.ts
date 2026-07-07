@@ -17,8 +17,8 @@ export const tagDescription: INodeProperties[] = [
 			{
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'Get many tags',
-				description: 'Get a paginated list of many tags',
+				action: 'List all tags for the authenticated user',
+				description: 'List all tags for the authenticated user',
 				routing: {
 					request: {
 						method: 'GET',
@@ -37,10 +37,10 @@ export const tagDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Saves',
-				value: 'getSaves',
-				action: 'Get saves for tag',
-				description: 'Get all saves with a specific tag',
+				name: 's',
+				value: 'gets',
+				action: 'List saves for a specific tag',
+				description: 'List saves for a specific tag',
 				routing: {
 					request: {
 						method: 'GET',
@@ -62,74 +62,68 @@ export const tagDescription: INodeProperties[] = [
 		default: 'getAll',
 	},
 	{
-		displayName: 'Tag Name',
-		name: 'tagName',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['tag'],
-				operation: ['getSaves'],
-			},
+	displayName: 'Tag Name',
+	name: 'tagName',
+	type: 'string',
+	required: true,
+	default: '',
+	displayOptions: {
+		show: {
+			resource: ['tag'],
+			operation: ['gets'],
 		},
-		description: 'Name of the tag to get saves for',
 	},
+	description: 'Tag Name of the tag',
+},
 	{
-		displayName: 'Return All',
-		name: 'returnAll',
-		type: 'boolean',
-		displayOptions: {
-			show: {
-				resource: ['tag'],
-				operation: ['getAll', 'getSaves'],
-			},
+	displayName: 'Return All',
+	name: 'returnAll',
+	type: 'boolean',
+	default: false,
+	displayOptions: {
+		show: {
+			resource: ['tag'],
+			operation: ['getAll'],
 		},
-		default: false,
-		description: 'Whether to return all results or only up to a given limit',
-		routing: {
-			send: {
-				paginate: '={{ $value }}',
-			},
-			operations: {
-				pagination: {
-					type: 'offset',
-					properties: {
-						limitParameter: 'per_page',
-						offsetParameter: 'page',
-						pageSize: 1000,
-						type: 'query',
-					},
+	},
+	description: 'Whether to return all results or only up to a given limit',
+	routing: {
+		send: {
+			paginate: '={{ $value }}',
+		},
+		operations: {
+			pagination: {
+				type: 'offset',
+				properties: {
+					limitParameter: 'per_page',
+					offsetParameter: 'page',
+					pageSize: 1000,
+					type: 'query',
 				},
 			},
 		},
 	},
-	{
-		displayName: 'Limit',
-		name: 'limit',
-		type: 'number',
-		displayOptions: {
-			show: {
-				resource: ['tag'],
-				operation: ['getAll', 'getSaves'],
-				returnAll: [false],
-			},
+},
+{
+	displayName: 'Limit',
+	name: 'limit',
+	type: 'number',
+	default: 1000,
+	displayOptions: {
+		show: {
+			resource: ['tag'],
+			operation: ['getAll'],
 		},
-		typeOptions: {
-			minValue: 1,
-			maxValue: 1000,
-		},
-		default: 50,
-		routing: {
-			send: {
-				type: 'query',
-				property: 'per_page',
-				value: '={{ $value }}',
-			},
-			output: {
-				maxResults: '={{ $value }}',
-			},
-		},
-		description: 'Max number of results to return',
 	},
+	description: 'Max number of results to return',
+	typeOptions: {
+		minValue: 1,
+	},
+	routing: {
+		send: {
+			type: 'query',
+			property: 'per_page',
+		},
+	},
+},
 ];

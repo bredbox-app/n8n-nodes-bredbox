@@ -1,25 +1,23 @@
 import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyFor = {
-	operation: ['search'],
-	resource: ['save'],
+	operation: ['getAll'],
+	resource: ['collection'],
 };
 
-export const saveSearchDescription: INodeProperties[] = [
+export const collectionGetAllDescription: INodeProperties[] = [
 	{
-		displayName: 'Search query string',
-		name: 'q',
+		displayName: 'Save ID',
+		name: 'save_id',
 		type: 'string',
-		required: true,
 		default: '',
-		description: 'Search query string',
 		displayOptions: {
 			show: showOnlyFor,
 		},
 		routing: {
 			send: {
 				type: 'query',
-				property: 'q',
+				property: 'save_id',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},

@@ -1,4 +1,10 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { collectionGetAllDescription } from './getAll';
+import { collectionCreateDescription } from './create';
+import { collectionAddItemDescription } from './addItem';
+import { collectionUpdateDescription } from './update';
+import { collectionUpdateItemDescription } from './updateItem';
+
 
 const showOnlyFor = {
 	resource: ['collection'],
@@ -15,21 +21,77 @@ export const collectionDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Add Item',
-				value: 'addItem',
-				action: 'Add item to collection',
-				description: 'Add a save to a collection',
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'List user collections with pagination and optional membership check',
+				description: 'List user collections with pagination and optional membership check',
 				routing: {
 					request: {
-						method: 'POST',
+						method: 'GET',
+						url: '/collections',
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: 'items',
+								},
+							},
+						],
+					},
+				},
+			},
+			{
+				name: 'Get',
+				value: 'get',
+				action: 'Get a single collection owned by the current user',
+				description: 'Get a single collection owned by the current user',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/collections/{{$parameter.collectionId}}',
+					},
+				},
+			},
+			{
+				name: 'Get Items',
+				value: 'getItems',
+				action: 'List items in a collection',
+				description: 'List items in a collection',
+				routing: {
+					request: {
+						method: 'GET',
 						url: '=/collections/{{$parameter.collectionId}}/items',
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: 'items',
+								},
+							},
+						],
+					},
+				},
+			},
+			{
+				name: 'Get Item',
+				value: 'getItem',
+				action: 'Get a single collection item',
+				description: 'Get a single collection item',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/collections/{{$parameter.collectionId}}/items/{{$parameter.itemId}}',
 					},
 				},
 			},
 			{
 				name: 'Create',
 				value: 'create',
-				action: 'Create a collection',
+				action: 'Create a new collection',
 				description: 'Create a new collection',
 				routing: {
 					request: {
@@ -39,94 +101,14 @@ export const collectionDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Delete',
-				value: 'delete',
-				action: 'Delete a collection',
-				description: 'Delete a collection by ID',
+				name: 'Add Item',
+				value: 'addItem',
+				action: 'Add a save to a collection',
+				description: 'Add a save to a collection',
 				routing: {
 					request: {
-						method: 'DELETE',
-						url: '=/collections/{{$parameter.collectionId}}',
-					},
-				},
-			},
-			{
-				name: 'Delete Item',
-				value: 'deleteItem',
-				action: 'Remove item from collection',
-				description: 'Remove a save from a collection',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/collections/{{$parameter.collectionId}}/items/{{$parameter.itemId}}',
-					},
-				},
-			},
-			{
-				name: 'Get',
-				value: 'get',
-				action: 'Get a collection',
-				description: 'Get a single collection by ID',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/collections/{{$parameter.collectionId}}',
-					},
-				},
-			},
-			{
-				name: 'Get Item',
-				value: 'getItem',
-				action: 'Get a collection item',
-				description: 'Get a single item from a collection',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/collections/{{$parameter.collectionId}}/items/{{$parameter.itemId}}',
-					},
-				},
-			},
-			{
-				name: 'Get Items',
-				value: 'getItems',
-				action: 'Get collection items',
-				description: 'Get all items in a collection',
-				routing: {
-					request: {
-						method: 'GET',
+						method: 'POST',
 						url: '=/collections/{{$parameter.collectionId}}/items',
-					},
-					output: {
-						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: 'items',
-								},
-							},
-						],
-					},
-				},
-			},
-			{
-				name: 'Get Many',
-				value: 'getAll',
-				action: 'Get many collections',
-				description: 'Get a paginated list of collections',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '/collections',
-					},
-					output: {
-						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: 'items',
-								},
-							},
-						],
 					},
 				},
 			},
@@ -134,7 +116,7 @@ export const collectionDescription: INodeProperties[] = [
 				name: 'Update',
 				value: 'update',
 				action: 'Update a collection',
-				description: 'Update a collection name or description',
+				description: 'Update a collection',
 				routing: {
 					request: {
 						method: 'PATCH',
@@ -145,11 +127,35 @@ export const collectionDescription: INodeProperties[] = [
 			{
 				name: 'Update Item',
 				value: 'updateItem',
-				action: 'Update a collection item',
-				description: 'Reorder or change note on a collection item',
+				action: 'Update a collection item (reorder and/or set note)',
+				description: 'Update a collection item (reorder and/or set note)',
 				routing: {
 					request: {
 						method: 'PATCH',
+						url: '=/collections/{{$parameter.collectionId}}/items/{{$parameter.itemId}}',
+					},
+				},
+			},
+			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a collection',
+				description: 'Delete a collection',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/collections/{{$parameter.collectionId}}',
+					},
+				},
+			},
+			{
+				name: 'Delete Item',
+				value: 'deleteItem',
+				action: 'Remove a save from a collection',
+				description: 'Remove a save from a collection',
+				routing: {
+					request: {
+						method: 'DELETE',
 						url: '=/collections/{{$parameter.collectionId}}/items/{{$parameter.itemId}}',
 					},
 				},
@@ -158,265 +164,138 @@ export const collectionDescription: INodeProperties[] = [
 		default: 'getAll',
 	},
 	{
-		displayName: 'Collection ID',
-		name: 'collectionId',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['get', 'update', 'delete', 'getItems', 'addItem', 'getItem', 'updateItem', 'deleteItem'],
-			},
-		},
-		description: 'ID of the collection',
-	},
-	{
-		displayName: 'Item ID',
-		name: 'itemId',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['getItem', 'updateItem', 'deleteItem'],
-			},
-		},
-		description: 'ID of the collection item',
-	},
-	{
-		displayName: 'Name',
-		name: 'name',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['create'],
-			},
-		},
-		description: 'Name of the collection (max 100 characters)',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'name',
-			},
+	displayName: 'Collection ID',
+	name: 'collectionId',
+	type: 'string',
+	required: true,
+	default: '',
+	displayOptions: {
+		show: {
+			resource: ['collection'],
+			operation: ['get', 'getItems', 'getItem', 'addItem', 'update', 'updateItem', 'delete', 'deleteItem'],
 		},
 	},
+	description: 'Collection ID of the collection',
+},
 	{
-		displayName: 'Description',
-		name: 'description',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['create'],
-			},
-		},
-		description: 'Description of the collection (max 200 characters)',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'description',
-			},
+	displayName: 'Item ID',
+	name: 'itemId',
+	type: 'string',
+	required: true,
+	default: '',
+	displayOptions: {
+		show: {
+			resource: ['collection'],
+			operation: ['getItem', 'updateItem', 'deleteItem'],
 		},
 	},
+	description: 'Item ID of the collection',
+},
 	{
-		displayName: 'Name',
-		name: 'name',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['update'],
-			},
-		},
-		description: 'New name for the collection (max 100 characters)',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'name',
-			},
+	displayName: 'Return All',
+	name: 'returnAll',
+	type: 'boolean',
+	default: false,
+	displayOptions: {
+		show: {
+			resource: ['collection'],
+			operation: ['getAll'],
 		},
 	},
-	{
-		displayName: 'Description',
-		name: 'description',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['update'],
-			},
+	description: 'Whether to return all results or only up to a given limit',
+	routing: {
+		send: {
+			paginate: '={{ $value }}',
 		},
-		description: 'New description for the collection (max 200 characters)',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'description',
-			},
-		},
-	},
-	{
-		displayName: 'Save ID',
-		name: 'user_save_id',
-		type: 'string',
-		required: true,
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['addItem'],
-			},
-		},
-		description: 'ID of the save to add to the collection',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'user_save_id',
-			},
-		},
-	},
-	{
-		displayName: 'Note',
-		name: 'note',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['addItem'],
-			},
-		},
-		description: 'Optional note for the item (max 300 characters)',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'note',
-			},
-		},
-	},
-	{
-		displayName: 'Direction',
-		name: 'direction',
-		type: 'options',
-		options: [
-			{ name: 'Up', value: 'up' },
-			{ name: 'Down', value: 'down' },
-		],
-		default: 'down',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['updateItem'],
-			},
-		},
-		description: 'Direction to move the item',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'direction',
-			},
-		},
-	},
-	{
-		displayName: 'Note',
-		name: 'note',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['updateItem'],
-			},
-		},
-		description: 'New note for the item (max 300 characters)',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'note',
-			},
-		},
-	},
-	{
-		displayName: 'Return All',
-		name: 'returnAll',
-		type: 'boolean',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['getAll'],
-			},
-		},
-		default: false,
-		description: 'Whether to return all results or only up to a given limit',
-		routing: {
-			send: {
-				paginate: '={{ $value }}',
-			},
-			operations: {
-				pagination: {
-					type: 'offset',
-					properties: {
-						limitParameter: 'per_page',
-						offsetParameter: 'page',
-						pageSize: 30,
-						type: 'query',
-					},
+		operations: {
+			pagination: {
+				type: 'offset',
+				properties: {
+					limitParameter: 'per_page',
+					offsetParameter: 'page',
+					pageSize: 30,
+					type: 'query',
 				},
 			},
 		},
 	},
-	{
-		displayName: 'Limit',
-		name: 'limit',
-		type: 'number',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['getAll'],
-				returnAll: [false],
-			},
-		},
-		typeOptions: {
-			minValue: 1,
-			maxValue: 100,
-		},
-		default: 50,
-		routing: {
-			send: {
-				type: 'query',
-				property: 'per_page',
-				value: '={{ $value }}',
-			},
-			output: {
-				maxResults: '={{ $value }}',
-			},
-		},
-		description: 'Max number of results to return',
-	},
-	{
-		displayName: 'Save ID Filter',
-		name: 'save_id',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['collection'],
-				operation: ['getAll'],
-			},
-		},
-		description: 'Filter to only collections containing this save ID',
-		routing: {
-			send: {
-				type: 'query',
-				property: 'save_id',
-			},
+},
+{
+	displayName: 'Limit',
+	name: 'limit',
+	type: 'number',
+	default: 30,
+	displayOptions: {
+		show: {
+			resource: ['collection'],
+			operation: ['getAll'],
 		},
 	},
+	description: 'Max number of results to return',
+	typeOptions: {
+		minValue: 1,
+	},
+	routing: {
+		send: {
+			type: 'query',
+			property: 'per_page',
+		},
+	},
+},
+	{
+	displayName: 'Return All',
+	name: 'returnAll',
+	type: 'boolean',
+	default: false,
+	displayOptions: {
+		show: {
+			resource: ['collection'],
+			operation: ['getItems'],
+		},
+	},
+	description: 'Whether to return all results or only up to a given limit',
+	routing: {
+		send: {
+			paginate: '={{ $value }}',
+		},
+		operations: {
+			pagination: {
+				type: 'offset',
+				properties: {
+					limitParameter: 'per_page',
+					offsetParameter: 'page',
+					pageSize: 30,
+					type: 'query',
+				},
+			},
+		},
+	},
+},
+{
+	displayName: 'Limit',
+	name: 'limit',
+	type: 'number',
+	default: 30,
+	displayOptions: {
+		show: {
+			resource: ['collection'],
+			operation: ['getItems'],
+		},
+	},
+	description: 'Max number of results to return',
+	typeOptions: {
+		minValue: 1,
+	},
+	routing: {
+		send: {
+			type: 'query',
+			property: 'per_page',
+		},
+	},
+},
+	...collectionGetAllDescription,
+	...collectionCreateDescription,
+	...collectionAddItemDescription,
+	...collectionUpdateDescription,
+	...collectionUpdateItemDescription,
 ];

@@ -2,14 +2,15 @@ import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyFor = {
 	operation: ['create'],
-	resource: ['save'],
+	resource: ['token'],
 };
 
-export const saveCreateDescription: INodeProperties[] = [
+export const tokenCreateDescription: INodeProperties[] = [
 	{
-		displayName: 'URL',
-		name: 'url',
+		displayName: 'Name',
+		name: 'name',
 		type: 'string',
+		required: true,
 		default: '',
 		displayOptions: {
 			show: showOnlyFor,
@@ -17,62 +18,51 @@ export const saveCreateDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'url',
+				property: 'name',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},
 	},
 	{
-		displayName: 'Content ID',
-		name: 'content_id',
+		displayName: 'Scopes',
+		name: 'scopes',
 		type: 'string',
-		default: '',
+		required: true,
+		default: [],
+		typeOptions: {
+			multipleValues: true,
+		},
 		displayOptions: {
 			show: showOnlyFor,
 		},
 		routing: {
 			send: {
 				type: 'body',
-				property: 'content_id',
+				property: 'scopes',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},
 	},
 	{
-		displayName: 'Title',
-		name: 'title',
-		type: 'string',
-		default: '',
+		displayName: 'Expires In Days',
+		name: 'expires_in_days',
+		type: 'number',
+		default: 0,
+		typeOptions: { minValue: 1 },
 		displayOptions: {
 			show: showOnlyFor,
 		},
 		routing: {
 			send: {
 				type: 'body',
-				property: 'title',
+				property: 'expires_in_days',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},
 	},
 	{
-		displayName: 'HTML',
-		name: 'html',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: showOnlyFor,
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'html',
-				value: '={{$value ? $value : undefined}}',
-			},
-		},
-	},
-	{
-		displayName: 'Background',
-		name: 'background',
+		displayName: 'No Expiration',
+		name: 'no_expiration',
 		type: 'boolean',
 		default: false,
 		displayOptions: {
@@ -81,7 +71,7 @@ export const saveCreateDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'background',
+				property: 'no_expiration',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},
