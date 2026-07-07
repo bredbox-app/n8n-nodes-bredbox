@@ -18,6 +18,42 @@ export const tokenDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Create',
+				value: 'create',
+				action: 'Create a token',
+				description: 'Create a new token',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/tokens',
+					},
+				},
+			},
+			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a token',
+				description: 'Delete a token permanently',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/tokens/{{$parameter.tokenId}}',
+					},
+				},
+			},
+			{
+				name: 'Get',
+				value: 'get',
+				action: 'Get a token',
+				description: 'Retrieve a single token by ID',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/tokens/{{$parameter.tokenId}}',
+					},
+				},
+			},
+			{
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many tokens',
@@ -40,18 +76,6 @@ export const tokenDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get',
-				value: 'get',
-				action: 'Get a token',
-				description: 'Retrieve a single token by ID',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/tokens/{{$parameter.tokenId}}',
-					},
-				},
-			},
-			{
 				name: 'Get Scopes',
 				value: 'getScopes',
 				action: 'Get available scopes',
@@ -70,18 +94,6 @@ export const tokenDescription: INodeProperties[] = [
 								},
 							},
 						],
-					},
-				},
-			},
-			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a token',
-				description: 'Create a new token',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/tokens',
 					},
 				},
 			},
@@ -109,20 +121,8 @@ export const tokenDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Delete',
-				value: 'delete',
-				action: 'Delete a token',
-				description: 'Delete a token permanently',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/tokens/{{$parameter.tokenId}}',
-					},
-				},
-			},
 		],
-		default: 'getAll',
+		default: 'create',
 	},
 	{
 	displayName: 'Token ID',
@@ -134,7 +134,7 @@ export const tokenDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['token'],
-			operation: ['get', 'regenerate', 'update', 'delete'],
+			operation: ['delete', 'get', 'regenerate', 'update'],
 		},
 	},
 	description: 'Token ID of the token',

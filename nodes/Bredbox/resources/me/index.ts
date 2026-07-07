@@ -17,26 +17,14 @@ export const meDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get Profile',
-				value: 'getProfile',
-				action: 'Get profile',
-				description: 'Retrieve the current user profile',
+				name: 'Clear Data',
+				value: 'clearData',
+				action: 'Clear all user data',
+				description: 'Request deletion of all user data',
 				routing: {
 					request: {
-						method: 'GET',
-						url: '/me',
-					},
-				},
-			},
-			{
-				name: 'Get Job',
-				value: 'getJob',
-				action: 'Get job status',
-				description: 'Retrieve the status of a background job',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/me/jobs/{{$parameter.jobId}}',
+						method: 'DELETE',
+						url: '/me/data',
 					},
 				},
 			},
@@ -65,19 +53,31 @@ export const meDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Clear Data',
-				value: 'clearData',
-				action: 'Clear all user data',
-				description: 'Request deletion of all user data',
+				name: 'Get Job',
+				value: 'getJob',
+				action: 'Get job status',
+				description: 'Retrieve the status of a background job',
 				routing: {
 					request: {
-						method: 'DELETE',
-						url: '/me/data',
+						method: 'GET',
+						url: '=/me/jobs/{{$parameter.jobId}}',
+					},
+				},
+			},
+			{
+				name: 'Get Profile',
+				value: 'getProfile',
+				action: 'Get profile',
+				description: 'Retrieve the current user profile',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '/me',
 					},
 				},
 			},
 		],
-		default: 'getProfile',
+		default: 'clearData',
 	},
 	{
 	displayName: 'Job ID',

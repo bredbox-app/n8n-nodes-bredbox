@@ -15,6 +15,18 @@ export const authorizationDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'delete_AuthorizationsDelete',
+				value: 'deleteAuthorizationsDelete',
+				action: 'Disconnect an application',
+				description: 'Disconnect an application',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/authorizations/{{$parameter.applicationId}}',
+					},
+				},
+			},
+			{
 				name: 'get_AuthorizationsList',
 				value: 'getAuthorizationsList',
 				action: 'List connected applications',
@@ -36,20 +48,8 @@ export const authorizationDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'delete_AuthorizationsDelete',
-				value: 'deleteAuthorizationsDelete',
-				action: 'Disconnect an application',
-				description: 'Disconnect an application',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/authorizations/{{$parameter.applicationId}}',
-					},
-				},
-			},
 		],
-		default: 'getAuthorizationsList',
+		default: 'deleteAuthorizationsDelete',
 	},
 	{
 	displayName: 'Application ID',

@@ -17,28 +17,6 @@ export const highlightDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get Many',
-				value: 'getAll',
-				action: 'Get many highlights',
-				description: 'Retrieve many highlights with pagination',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/saves/{{$parameter.saveId}}/highlights',
-					},
-					output: {
-						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: 'items',
-								},
-							},
-						],
-					},
-				},
-			},
-			{
 				name: 'Create',
 				value: 'create',
 				action: 'Create a highlight',
@@ -62,8 +40,30 @@ export const highlightDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'Get many highlights',
+				description: 'Retrieve many highlights with pagination',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/saves/{{$parameter.saveId}}/highlights',
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: 'items',
+								},
+							},
+						],
+					},
+				},
+			},
 		],
-		default: 'getAll',
+		default: 'create',
 	},
 	{
 	displayName: 'Save ID',
@@ -74,7 +74,7 @@ export const highlightDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['highlight'],
-			operation: ['getAll', 'create', 'delete'],
+			operation: ['create', 'delete', 'getAll'],
 		},
 	},
 	description: 'Save ID of the highlight',

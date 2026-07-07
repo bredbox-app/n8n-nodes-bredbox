@@ -1,9 +1,9 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { saveCreateDescription } from './create';
 import { saveGetAllDescription } from './getAll';
 import { saveSearchDescription } from './search';
-import { saveCreateDescription } from './create';
-import { saveUpdateDescription } from './update';
 import { saveSetTagsDescription } from './setTags';
+import { saveUpdateDescription } from './update';
 
 
 const showOnlyFor = {
@@ -21,24 +21,26 @@ export const saveDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get Many',
-				value: 'getAll',
-				action: 'Get many saves',
-				description: 'Retrieve many saves with pagination',
+				name: 'Create',
+				value: 'create',
+				action: 'Create a save',
+				description: 'Create a new save',
 				routing: {
 					request: {
-						method: 'GET',
+						method: 'POST',
 						url: '/saves',
 					},
-					output: {
-						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: 'items',
-								},
-							},
-						],
+				},
+			},
+			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a save',
+				description: 'Delete a save permanently',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/saves/{{$parameter.saveId}}',
 					},
 				},
 			},
@@ -66,6 +68,28 @@ export const saveDescription: INodeProperties[] = [
 						headers: {
 							Accept: 'text/plain',
 						},
+					},
+				},
+			},
+			{
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'Get many saves',
+				description: 'Retrieve many saves with pagination',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '/saves',
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: 'items',
+								},
+							},
+						],
 					},
 				},
 			},
@@ -104,14 +128,14 @@ export const saveDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a save',
-				description: 'Create a new save',
+				name: 'Set Tags',
+				value: 'setTags',
+				action: 'Set save tags',
+				description: 'Replace all tags on a save',
 				routing: {
 					request: {
-						method: 'POST',
-						url: '/saves',
+						method: 'PUT',
+						url: '=/saves/{{$parameter.saveId}}/tags',
 					},
 				},
 			},
@@ -127,32 +151,8 @@ export const saveDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Set Tags',
-				value: 'setTags',
-				action: 'Set save tags',
-				description: 'Replace all tags on a save',
-				routing: {
-					request: {
-						method: 'PUT',
-						url: '=/saves/{{$parameter.saveId}}/tags',
-					},
-				},
-			},
-			{
-				name: 'Delete',
-				value: 'delete',
-				action: 'Delete a save',
-				description: 'Delete a save permanently',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/saves/{{$parameter.saveId}}',
-					},
-				},
-			},
 		],
-		default: 'getAll',
+		default: 'create',
 	},
 	{
 	displayName: 'Save ID',
@@ -163,7 +163,7 @@ export const saveDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['save'],
-			operation: ['get', 'getContent', 'getTags', 'update', 'setTags', 'delete'],
+			operation: ['delete', 'get', 'getContent', 'getTags', 'setTags', 'update'],
 		},
 	},
 	description: 'Save ID of the save',
@@ -321,9 +321,9 @@ export const saveDescription: INodeProperties[] = [
 		},
 	},
 },
+	...saveCreateDescription,
 	...saveGetAllDescription,
 	...saveSearchDescription,
-	...saveCreateDescription,
-	...saveUpdateDescription,
 	...saveSetTagsDescription,
+	...saveUpdateDescription,
 ];

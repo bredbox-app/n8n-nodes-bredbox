@@ -1,7 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { collectionGetAllDescription } from './getAll';
-import { collectionCreateDescription } from './create';
 import { collectionAddItemDescription } from './addItem';
+import { collectionCreateDescription } from './create';
+import { collectionGetAllDescription } from './getAll';
 import { collectionUpdateDescription } from './update';
 import { collectionUpdateItemDescription } from './updateItem';
 
@@ -21,86 +21,6 @@ export const collectionDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get Many',
-				value: 'getAll',
-				action: 'Get many collections',
-				description: 'Retrieve many collections with pagination',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '/collections',
-					},
-					output: {
-						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: 'items',
-								},
-							},
-						],
-					},
-				},
-			},
-			{
-				name: 'Get',
-				value: 'get',
-				action: 'Get a collection',
-				description: 'Retrieve a single collection by ID',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/collections/{{$parameter.collectionId}}',
-					},
-				},
-			},
-			{
-				name: 'Get Items',
-				value: 'getItems',
-				action: 'Get items',
-				description: 'Retrieve all items in a collection',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/collections/{{$parameter.collectionId}}/items',
-					},
-					output: {
-						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: 'items',
-								},
-							},
-						],
-					},
-				},
-			},
-			{
-				name: 'Get Item',
-				value: 'getItem',
-				action: 'Get an item',
-				description: 'Retrieve a single item from a collection',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/collections/{{$parameter.collectionId}}/items/{{$parameter.itemId}}',
-					},
-				},
-			},
-			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a collection',
-				description: 'Create a new collection',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/collections',
-					},
-				},
-			},
-			{
 				name: 'Add Item',
 				value: 'addItem',
 				action: 'Add an item to collection',
@@ -113,26 +33,14 @@ export const collectionDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Update',
-				value: 'update',
-				action: 'Update a collection',
-				description: 'Update a collection\'s properties',
+				name: 'Create',
+				value: 'create',
+				action: 'Create a collection',
+				description: 'Create a new collection',
 				routing: {
 					request: {
-						method: 'PATCH',
-						url: '=/collections/{{$parameter.collectionId}}',
-					},
-				},
-			},
-			{
-				name: 'Update Item',
-				value: 'updateItem',
-				action: 'Update an item in collection',
-				description: 'Reorder or change a note on a collection item',
-				routing: {
-					request: {
-						method: 'PATCH',
-						url: '=/collections/{{$parameter.collectionId}}/items/{{$parameter.itemId}}',
+						method: 'POST',
+						url: '/collections',
 					},
 				},
 			},
@@ -160,8 +68,100 @@ export const collectionDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Get',
+				value: 'get',
+				action: 'Get a collection',
+				description: 'Retrieve a single collection by ID',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/collections/{{$parameter.collectionId}}',
+					},
+				},
+			},
+			{
+				name: 'Get Item',
+				value: 'getItem',
+				action: 'Get an item',
+				description: 'Retrieve a single item from a collection',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/collections/{{$parameter.collectionId}}/items/{{$parameter.itemId}}',
+					},
+				},
+			},
+			{
+				name: 'Get Items',
+				value: 'getItems',
+				action: 'Get items',
+				description: 'Retrieve all items in a collection',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/collections/{{$parameter.collectionId}}/items',
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: 'items',
+								},
+							},
+						],
+					},
+				},
+			},
+			{
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'Get many collections',
+				description: 'Retrieve many collections with pagination',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '/collections',
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: 'items',
+								},
+							},
+						],
+					},
+				},
+			},
+			{
+				name: 'Update',
+				value: 'update',
+				action: 'Update a collection',
+				description: 'Update a collection\'s properties',
+				routing: {
+					request: {
+						method: 'PATCH',
+						url: '=/collections/{{$parameter.collectionId}}',
+					},
+				},
+			},
+			{
+				name: 'Update Item',
+				value: 'updateItem',
+				action: 'Update an item in collection',
+				description: 'Reorder or change a note on a collection item',
+				routing: {
+					request: {
+						method: 'PATCH',
+						url: '=/collections/{{$parameter.collectionId}}/items/{{$parameter.itemId}}',
+					},
+				},
+			},
 		],
-		default: 'getAll',
+		default: 'addItem',
 	},
 	{
 	displayName: 'Collection ID',
@@ -172,7 +172,7 @@ export const collectionDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['collection'],
-			operation: ['get', 'getItems', 'getItem', 'addItem', 'update', 'updateItem', 'delete', 'deleteItem'],
+			operation: ['addItem', 'delete', 'deleteItem', 'get', 'getItem', 'getItems', 'update', 'updateItem'],
 		},
 	},
 	description: 'Collection ID of the collection',
@@ -186,7 +186,7 @@ export const collectionDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['collection'],
-			operation: ['getItem', 'updateItem', 'deleteItem'],
+			operation: ['deleteItem', 'getItem', 'updateItem'],
 		},
 	},
 	description: 'Item ID of the collection',
@@ -199,7 +199,7 @@ export const collectionDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['collection'],
-			operation: ['getAll'],
+			operation: ['getItems'],
 		},
 	},
 	description: 'Whether to return all results or only up to a given limit',
@@ -228,7 +228,7 @@ export const collectionDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['collection'],
-			operation: ['getAll'],
+			operation: ['getItems'],
 		},
 	},
 	description: 'Max number of results to return',
@@ -250,7 +250,7 @@ export const collectionDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['collection'],
-			operation: ['getItems'],
+			operation: ['getAll'],
 		},
 	},
 	description: 'Whether to return all results or only up to a given limit',
@@ -279,7 +279,7 @@ export const collectionDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['collection'],
-			operation: ['getItems'],
+			operation: ['getAll'],
 		},
 	},
 	description: 'Max number of results to return',
@@ -293,9 +293,9 @@ export const collectionDescription: INodeProperties[] = [
 		},
 	},
 },
-	...collectionGetAllDescription,
-	...collectionCreateDescription,
 	...collectionAddItemDescription,
+	...collectionCreateDescription,
+	...collectionGetAllDescription,
 	...collectionUpdateDescription,
 	...collectionUpdateItemDescription,
 ];

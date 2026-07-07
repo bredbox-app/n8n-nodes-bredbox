@@ -15,6 +15,31 @@ export const exportDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Create',
+				value: 'create',
+				action: 'Create a export',
+				description: 'Create a new export',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/exports',
+					},
+				},
+			},
+			{
+				name: 'Download',
+				value: 'download',
+				action: 'Download export',
+				description: 'Download a completed export archive',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/exports/{{$parameter.exportId}}/download',
+						encoding: 'arraybuffer',
+					},
+				},
+			},
+			{
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many exports',
@@ -36,33 +61,8 @@ export const exportDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Download',
-				value: 'download',
-				action: 'Download export',
-				description: 'Download a completed export archive',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/exports/{{$parameter.exportId}}/download',
-						encoding: 'arraybuffer',
-					},
-				},
-			},
-			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a export',
-				description: 'Create a new export',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/exports',
-					},
-				},
-			},
 		],
-		default: 'getAll',
+		default: 'create',
 	},
 	{
 	displayName: 'Export ID',

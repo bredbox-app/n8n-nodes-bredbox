@@ -616,17 +616,10 @@ function generate(spec) {
     }
   }
 
-  // ── 2. Ensure deterministic ordering ────────────────────────────────────
+  // ── 2. Sort endpoints alphabetically by display name ──────────────────
 
   for (const [res, ops] of Object.entries(resourceGroups)) {
-    // Sort: GET list first, then POST create, then GET single, then PATCH, then DELETE
-    const order = { GET: 1, POST: 2, PATCH: 3, PUT: 4, DELETE: 5 };
-    ops.sort((a, b) => {
-      const oa = order[a.method] || 9;
-      const ob = order[b.method] || 9;
-      if (oa !== ob) return oa - ob;
-      return a.path.localeCompare(b.path);
-    });
+    ops.sort((a, b) => a.parsed.displayName.localeCompare(b.parsed.displayName));
   }
 
   // ── 3. Generate resource files ──────────────────────────────────────────

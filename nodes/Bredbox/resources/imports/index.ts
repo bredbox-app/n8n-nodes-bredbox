@@ -15,6 +15,18 @@ export const importDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Create',
+				value: 'create',
+				action: 'Create a import',
+				description: 'Create a new import',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/imports',
+					},
+				},
+			},
+			{
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many imports',
@@ -36,20 +48,8 @@ export const importDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a import',
-				description: 'Create a new import',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/imports',
-					},
-				},
-			},
 		],
-		default: 'getAll',
+		default: 'create',
 	},
 	{
 	displayName: 'Return All',

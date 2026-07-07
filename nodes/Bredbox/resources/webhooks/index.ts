@@ -18,24 +18,26 @@ export const webhookDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get Many',
-				value: 'getAll',
-				action: 'Get many webhooks',
-				description: 'Retrieve many webhooks with pagination',
+				name: 'Create',
+				value: 'create',
+				action: 'Create a webhook',
+				description: 'Create a new webhook',
 				routing: {
 					request: {
-						method: 'GET',
+						method: 'POST',
 						url: '/webhooks',
 					},
-					output: {
-						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: 'items',
-								},
-							},
-						],
+				},
+			},
+			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a webhook',
+				description: 'Delete a webhook permanently',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/webhooks/{{$parameter.webhookId}}',
 					},
 				},
 			},
@@ -74,14 +76,24 @@ export const webhookDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a webhook',
-				description: 'Create a new webhook',
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'Get many webhooks',
+				description: 'Retrieve many webhooks with pagination',
 				routing: {
 					request: {
-						method: 'POST',
+						method: 'GET',
 						url: '/webhooks',
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: 'items',
+								},
+							},
+						],
 					},
 				},
 			},
@@ -97,20 +109,8 @@ export const webhookDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Delete',
-				value: 'delete',
-				action: 'Delete a webhook',
-				description: 'Delete a webhook permanently',
-				routing: {
-					request: {
-						method: 'DELETE',
-						url: '=/webhooks/{{$parameter.webhookId}}',
-					},
-				},
-			},
 		],
-		default: 'getAll',
+		default: 'create',
 	},
 	{
 	displayName: 'Webhook ID',
@@ -121,7 +121,7 @@ export const webhookDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['webhook'],
-			operation: ['get', 'update', 'delete'],
+			operation: ['delete', 'get', 'update'],
 		},
 	},
 	description: 'Webhook ID of the webhook',
@@ -134,7 +134,7 @@ export const webhookDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['webhook'],
-			operation: ['getAll'],
+			operation: ['getEvents'],
 		},
 	},
 	description: 'Whether to return all results or only up to a given limit',
@@ -163,7 +163,7 @@ export const webhookDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['webhook'],
-			operation: ['getAll'],
+			operation: ['getEvents'],
 		},
 	},
 	description: 'Max number of results to return',
@@ -185,7 +185,7 @@ export const webhookDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['webhook'],
-			operation: ['getEvents'],
+			operation: ['getAll'],
 		},
 	},
 	description: 'Whether to return all results or only up to a given limit',
@@ -214,7 +214,7 @@ export const webhookDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['webhook'],
-			operation: ['getEvents'],
+			operation: ['getAll'],
 		},
 	},
 	description: 'Max number of results to return',
