@@ -18,7 +18,7 @@ export const exportDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many exports',
-				description: 'Retrieve all exports with pagination',
+				description: 'Retrieve many exports with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -111,7 +111,7 @@ export const exportDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['export'],

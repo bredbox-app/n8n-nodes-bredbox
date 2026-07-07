@@ -20,7 +20,7 @@ export const highlightDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many highlights',
-				description: 'Retrieve all highlights with pagination',
+				description: 'Retrieve many highlights with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -126,7 +126,7 @@ export const highlightDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['highlight'],

@@ -18,7 +18,7 @@ export const tagDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many tags',
-				description: 'Retrieve all tags with pagination',
+				description: 'Retrieve many tags with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -37,7 +37,7 @@ export const tagDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 's',
+				name: 'S',
 				value: 'gets',
 				action: 'List saves for a specific tag',
 				description: 'List saves for a specific tag',
@@ -108,7 +108,7 @@ export const tagDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 1000,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['tag'],

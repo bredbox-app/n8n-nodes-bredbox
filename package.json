@@ -2,8 +2,11 @@
   "name": "@bredbox/n8n-nodes-bredbox",
   "version": "0.0.0",
   "description": "n8n community node for interacting with the Bredbox API",
-  "author": "Nicholas C. Zaks",
-  "license": "Apache-2.0",
+  "author": {
+    "name": "Nicholas C. Zakas",
+    "email": "nicholas+npm@humanwhocodes.com"
+  },
+  "license": "MIT",
   "homepage": "https://bredbox.app",
   "publishConfig": {
     "access": "public"
@@ -17,6 +20,7 @@
     "generate": "node ./scripts/generate.mjs",
     "build": "n8n-node build",
     "build:watch": "tsc --watch",
+    "setup:hooks": "node ./scripts/install-hooks.mjs",
     "dev": "n8n-node dev",
     "lint": "n8n-node lint",
     "lint:fix": "n8n-node lint --fix",

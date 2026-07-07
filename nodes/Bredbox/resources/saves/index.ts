@@ -24,7 +24,7 @@ export const saveDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many saves',
-				description: 'Retrieve all saves with pagination',
+				description: 'Retrieve many saves with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -201,7 +201,7 @@ export const saveDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['save'],
@@ -252,7 +252,7 @@ export const saveDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['save'],
@@ -303,7 +303,7 @@ export const saveDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 10,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['save'],

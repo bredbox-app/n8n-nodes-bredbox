@@ -24,7 +24,7 @@ export const collectionDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many collections',
-				description: 'Retrieve all collections with pagination',
+				description: 'Retrieve many collections with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -224,7 +224,7 @@ export const collectionDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['collection'],
@@ -275,7 +275,7 @@ export const collectionDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['collection'],

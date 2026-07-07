@@ -18,7 +18,7 @@ export const importDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many imports',
-				description: 'Retrieve all imports with pagination',
+				description: 'Retrieve many imports with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -84,7 +84,7 @@ export const importDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['import'],

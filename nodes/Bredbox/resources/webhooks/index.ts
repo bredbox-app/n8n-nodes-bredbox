@@ -21,7 +21,7 @@ export const webhookDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many webhooks',
-				description: 'Retrieve all webhooks with pagination',
+				description: 'Retrieve many webhooks with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -159,7 +159,7 @@ export const webhookDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['webhook'],
@@ -210,7 +210,7 @@ export const webhookDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['webhook'],

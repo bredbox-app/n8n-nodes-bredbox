@@ -21,7 +21,7 @@ export const tokenDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many tokens',
-				description: 'Retrieve all tokens with pagination',
+				description: 'Retrieve many tokens with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -128,6 +128,7 @@ export const tokenDescription: INodeProperties[] = [
 	displayName: 'Token ID',
 	name: 'tokenId',
 	type: 'string',
+	typeOptions: { password: true },
 	required: true,
 	default: '',
 	displayOptions: {
@@ -171,7 +172,7 @@ export const tokenDescription: INodeProperties[] = [
 	displayName: 'Limit',
 	name: 'limit',
 	type: 'number',
-	default: 30,
+	default: 50,
 	displayOptions: {
 		show: {
 			resource: ['token'],
