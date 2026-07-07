@@ -1,12 +1,9 @@
 {
   "name": "@bredbox/n8n-nodes-bredbox",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "n8n community node for interacting with the Bredbox API",
-	"author": {
-		"name": "Bredbox",
-		"email": "support@bredbox.app"
-	},
-  "license": "MIT",
+  "author": "Nicholas C. Zaks",
+  "license": "Apache-2.0",
   "homepage": "https://bredbox.app",
   "publishConfig": {
     "access": "public"
@@ -17,6 +14,7 @@
     "url": "https://github.com/bredbox-app/n8n-nodes-bredbox.git"
   },
   "scripts": {
+    "generate": "node ./scripts/generate.mjs",
     "build": "n8n-node build",
     "build:watch": "tsc --watch",
     "dev": "n8n-node dev",
@@ -36,7 +34,6 @@
     "@n8n/node-cli": "*",
     "eslint": "9.32.0",
     "prettier": "3.6.2",
-    "release-it": "^19.0.4",
     "typescript": "5.9.2"
   },
   "peerDependencies": { "n8n-workflow": "*" }
