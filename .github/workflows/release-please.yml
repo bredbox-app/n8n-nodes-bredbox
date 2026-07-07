@@ -28,11 +28,12 @@ jobs:
               with:
                   node-version: lts/*
                   registry-url: "https://registry.npmjs.org"
+                  package-manager-cache: false
               if: ${{ steps.release.outputs.release_created }}
 
             - run: npm ci
               if: ${{ steps.release.outputs.release_created }}
 
             - name: Publish to npm
-              run: npm publish
+              run: npm publish --provenance
               if: ${{ steps.release.outputs.release_created }}
