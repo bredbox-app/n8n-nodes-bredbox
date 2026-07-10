@@ -75,7 +75,7 @@ export const saveDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many saves',
-				description: 'Retrieve many saves with pagination',
+				description: 'Retrieve saves with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -97,7 +97,7 @@ export const saveDescription: INodeProperties[] = [
 				name: 'Get Tags',
 				value: 'getTags',
 				action: 'Get save tags',
-				description: 'Retrieve all tags on a save',
+				description: 'Retrieve tags on a save',
 				routing: {
 					request: {
 						method: 'GET',
@@ -190,7 +190,7 @@ export const saveDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 30,
+					pageSize: 50,
 					type: 'query',
 				},
 			},
@@ -241,7 +241,7 @@ export const saveDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 30,
+					pageSize: 50,
 					type: 'query',
 				},
 			},
@@ -292,7 +292,7 @@ export const saveDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 10,
+					pageSize: 50,
 					type: 'query',
 				},
 			},

@@ -309,15 +309,15 @@ function parseOperationId(operationId, method) {
  * - `description`: Sentence case, alternative wording, adds detail. Shown as subtext in dropdown.
  */
 const ACTION_TEMPLATES = {
-  getAll:        ['Get many {resource}s',        'Retrieve all {resource}s with pagination'],
+  getAll:        ['Get many {resource}s',        'Retrieve {resource}s with pagination'],
   get:           ['Get a {resource}',             'Retrieve a single {resource} by ID'],
   getContent:    ['Get {resource} content',       'Retrieve the content of a {resource}'],
-  getTags:       ['Get {resource} tags',          'Retrieve all tags on a {resource}'],
-  getSaves:      ['Get saves for {resource}',    'Retrieve all saves with a specific {resource}'],
-  getItems:      ['Get items',                    'Retrieve all items in a {resource}'],
+  getTags:       ['Get {resource} tags',          'Retrieve tags on a {resource}'],
+  getSaves:      ['Get saves for {resource}',    'Retrieve saves with a specific {resource}'],
+  getItems:      ['Get items',                    'Retrieve items in a {resource}'],
   getItem:       ['Get an item',                  'Retrieve a single item from a {resource}'],
-  getEvents:     ['Get available events',         'Retrieve all available webhook event types'],
-  getScopes:     ['Get available scopes',         'Retrieve all available token scopes'],
+  getEvents:     ['Get available events',         'Retrieve available webhook event types'],
+  getScopes:     ['Get available scopes',         'Retrieve available token scopes'],
   getJob:        ['Get job status',               'Retrieve the status of a background job'],
   getProfile:    ['Get profile',                  'Retrieve the current user profile'],
   create:        ['Create a {resource}',          'Create a new {resource}'],
@@ -355,7 +355,8 @@ function generatePropertyField(param, propName, n8nType, required, showCondition
   if (n8nType === 'boolean') {
     lines.push('\tdefault: false,');
   } else if (n8nType === 'number') {
-    lines.push(`\tdefault: ${param.schema?.default ?? 0},`);
+    const fallbackDefault = propName === 'limit' ? 50 : 0;
+    lines.push(`\tdefault: ${param.schema?.default ?? fallbackDefault},`);
   } else if (n8nType === 'options' && param.schema?.default) {
     lines.push(`\tdefault: '${esc(String(param.schema.default))}',`);
   } else if (n8nType === 'string' && param.schema?.default !== undefined) {
@@ -546,7 +547,7 @@ function generatePaginationFields(resource, opValue, pageSize) {
 \tdisplayName: 'Limit',
 \tname: 'limit',
 \ttype: 'number',
-\tdefault: ${pageSize},
+\tdefault: 50,
 \tdisplayOptions: {
 \t\tshow: {
 \t\t\tresource: ['${resource}'],
@@ -659,8 +660,7 @@ function generate(spec) {
 
       // Add pagination for list endpoints
       if (isListOp) {
-        const defaultPerPage = (op.parameters || []).find(p => p.name === 'per_page');
-        const pageSize = defaultPerPage?.schema?.default ?? 30;
+        const pageSize = 50;
         paginationFields.push(generatePaginationFields(resource, opValue, pageSize));
       }
 
@@ -825,7 +825,8 @@ function generateOpParamFile(resource, opValue, bodyParams, queryParams) {
     if (n8nType === 'boolean') {
       lines.push(`\t\tdefault: ${hasExplicitDefault ? schema.default : 'false'},`);
     } else if (n8nType === 'number') {
-      lines.push(`\t\tdefault: ${hasExplicitDefault ? schema.default : 0},`);
+      const fallbackDefault = name === 'limit' ? 50 : 0;
+      lines.push(`\t\tdefault: ${hasExplicitDefault ? schema.default : fallbackDefault},`);
     } else if (n8nType === 'string' && schema.type === 'array') {
       lines.push(`\t\tdefault: ${hasExplicitDefault ? JSON.stringify(schema.default) : '[]'},`);
     } else if (n8nType === 'string') {

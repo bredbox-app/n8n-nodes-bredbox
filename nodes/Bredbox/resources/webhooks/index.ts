@@ -57,7 +57,7 @@ export const webhookDescription: INodeProperties[] = [
 				name: 'Get Events',
 				value: 'getEvents',
 				action: 'Get available events',
-				description: 'Retrieve all available webhook event types',
+				description: 'Retrieve available webhook event types',
 				routing: {
 					request: {
 						method: 'GET',
@@ -79,7 +79,7 @@ export const webhookDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many webhooks',
-				description: 'Retrieve many webhooks with pagination',
+				description: 'Retrieve webhooks with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -148,7 +148,7 @@ export const webhookDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 30,
+					pageSize: 50,
 					type: 'query',
 				},
 			},
@@ -199,7 +199,7 @@ export const webhookDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 30,
+					pageSize: 50,
 					type: 'query',
 				},
 			},

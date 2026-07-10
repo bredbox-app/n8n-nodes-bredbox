@@ -7,11 +7,12 @@ const showOnlyFor = {
 
 export const saveSearchDescription: INodeProperties[] = [
 	{
-		displayName: 'Search Query String',
+		displayName: 'Search query string',
 		name: 'q',
 		type: 'string',
 		required: true,
 		default: '',
+		description: 'Search query string',
 		displayOptions: {
 			show: showOnlyFor,
 		},

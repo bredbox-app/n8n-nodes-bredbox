@@ -96,7 +96,7 @@ export const collectionDescription: INodeProperties[] = [
 				name: 'Get Items',
 				value: 'getItems',
 				action: 'Get items',
-				description: 'Retrieve all items in a collection',
+				description: 'Retrieve items in a collection',
 				routing: {
 					request: {
 						method: 'GET',
@@ -118,7 +118,7 @@ export const collectionDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many collections',
-				description: 'Retrieve many collections with pagination',
+				description: 'Retrieve collections with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -213,7 +213,7 @@ export const collectionDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 30,
+					pageSize: 50,
 					type: 'query',
 				},
 			},
@@ -264,7 +264,7 @@ export const collectionDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 30,
+					pageSize: 50,
 					type: 'query',
 				},
 			},

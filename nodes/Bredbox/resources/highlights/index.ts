@@ -44,7 +44,7 @@ export const highlightDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many highlights',
-				description: 'Retrieve many highlights with pagination',
+				description: 'Retrieve highlights with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -115,7 +115,7 @@ export const highlightDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 30,
+					pageSize: 50,
 					type: 'query',
 				},
 			},

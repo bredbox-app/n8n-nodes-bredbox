@@ -57,7 +57,7 @@ export const tokenDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many tokens',
-				description: 'Retrieve many tokens with pagination',
+				description: 'Retrieve tokens with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -79,7 +79,7 @@ export const tokenDescription: INodeProperties[] = [
 				name: 'Get Scopes',
 				value: 'getScopes',
 				action: 'Get available scopes',
-				description: 'Retrieve all available token scopes',
+				description: 'Retrieve available token scopes',
 				routing: {
 					request: {
 						method: 'GET',
@@ -128,7 +128,6 @@ export const tokenDescription: INodeProperties[] = [
 	displayName: 'Token ID',
 	name: 'tokenId',
 	type: 'string',
-	typeOptions: { password: true },
 	required: true,
 	default: '',
 	displayOptions: {
@@ -161,7 +160,7 @@ export const tokenDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 30,
+					pageSize: 50,
 					type: 'query',
 				},
 			},

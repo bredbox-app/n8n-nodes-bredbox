@@ -43,7 +43,7 @@ export const exportDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many exports',
-				description: 'Retrieve many exports with pagination',
+				description: 'Retrieve exports with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -100,7 +100,7 @@ export const exportDescription: INodeProperties[] = [
 				properties: {
 					limitParameter: 'per_page',
 					offsetParameter: 'page',
-					pageSize: 30,
+					pageSize: 50,
 					type: 'query',
 				},
 			},
