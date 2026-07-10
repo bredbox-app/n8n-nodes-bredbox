@@ -31,7 +31,9 @@ jobs:
                   package-manager-cache: false
               if: ${{ steps.release.outputs.release_created }}
 
-            - run: npm ci
+            - run: | 
+                npm ci
+                npm run build
               if: ${{ steps.release.outputs.release_created }}
 
             - name: Publish to npm
