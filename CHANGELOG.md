@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/bredbox-app/n8n-nodes-bredbox/compare/n8n-nodes-bredbox-v1.0.1...n8n-nodes-bredbox-v1.0.2) (2026-07-10)
+
+
+### Bug Fixes
+
+* Rename operations for clarity ([e522fce](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/e522fce4a95b98a9524c21f19a8da6e75dc6046b))
+* Sync with deployed API ([a9e3d8e](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/a9e3d8e1947f960e4728e9716d58fdfdab081359))
+
 ## [1.0.1](https://github.com/bredbox-app/n8n-nodes-bredbox/compare/n8n-nodes-bredbox-v1.0.0...n8n-nodes-bredbox-v1.0.1) (2026-07-07)
 
 
