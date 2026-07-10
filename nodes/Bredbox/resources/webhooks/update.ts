@@ -42,6 +42,7 @@ export const webhookUpdateDescription: INodeProperties[] = [
 		displayName: 'Secret',
 		name: 'secret',
 		type: 'string',
+		typeOptions: { password: true },
 		default: '',
 		displayOptions: {
 			show: showOnlyFor,
@@ -60,8 +61,8 @@ export const webhookUpdateDescription: INodeProperties[] = [
 		type: 'options',
 		default: 'explicit',
 		options: [
-			{ name: 'Explicit', value: 'explicit' },
 			{ name: 'All_events', value: 'all_events' },
+			{ name: 'Explicit', value: 'explicit' },
 		],
 		displayOptions: {
 			show: showOnlyFor,

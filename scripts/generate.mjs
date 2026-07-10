@@ -204,6 +204,10 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function getSortedEnumValues(enumValues) {
+  return [...enumValues].sort((a, b) => String(a).localeCompare(String(b), undefined, { sensitivity: 'base' }));
+}
+
 // ─── OPERATION-ID PARSER ─────────────────────────────────────────────────────
 
 /**
@@ -387,7 +391,7 @@ function generatePropertyField(param, propName, n8nType, required, showCondition
   // options
   if (n8nType === 'options' && param.schema?.enum) {
     lines.push('\toptions: [');
-    for (const val of param.schema.enum) {
+    for (const val of getSortedEnumValues(param.schema.enum)) {
       lines.push(`\t\t{ name: '${esc(capitalize(String(val)))}', value: '${esc(String(val))}' },`);
     }
     lines.push('\t],');
@@ -848,7 +852,7 @@ function generateOpParamFile(resource, opValue, bodyParams, queryParams) {
     // options
     if (n8nType === 'options' && schema.enum) {
       lines.push('\t\toptions: [');
-      for (const val of schema.enum) {
+      for (const val of getSortedEnumValues(schema.enum)) {
         lines.push(`\t\t\t{ name: '${esc(capitalize(String(val)))}', value: '${esc(String(val))}' },`);
       }
       lines.push('\t\t],');
@@ -922,7 +926,7 @@ function generateOpParamFile(resource, opValue, bodyParams, queryParams) {
     // options
     if (n8nType === 'options' && schema.enum) {
       lines.push('\t\toptions: [');
-      for (const val of schema.enum) {
+      for (const val of getSortedEnumValues(schema.enum)) {
         lines.push(`\t\t\t{ name: '${esc(capitalize(String(val)))}', value: '${esc(String(val))}' },`);
       }
       lines.push('\t\t],');

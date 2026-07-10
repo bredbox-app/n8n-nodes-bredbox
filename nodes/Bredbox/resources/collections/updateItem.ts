@@ -12,8 +12,8 @@ export const collectionUpdateItemDescription: INodeProperties[] = [
 		type: 'options',
 		default: 'up',
 		options: [
-			{ name: 'Up', value: 'up' },
 			{ name: 'Down', value: 'down' },
+			{ name: 'Up', value: 'up' },
 		],
 		displayOptions: {
 			show: showOnlyFor,

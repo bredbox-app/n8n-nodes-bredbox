@@ -13,10 +13,10 @@ export const saveGetAllDescription: INodeProperties[] = [
 		default: 'all',
 		options: [
 			{ name: 'All', value: 'all' },
-			{ name: 'Favorites', value: 'favorites' },
 			{ name: 'Archived', value: 'archived' },
-			{ name: 'Unarchived', value: 'unarchived' },
+			{ name: 'Favorites', value: 'favorites' },
 			{ name: 'Highlights', value: 'highlights' },
+			{ name: 'Unarchived', value: 'unarchived' },
 		],
 		displayOptions: {
 			show: showOnlyFor,
@@ -35,11 +35,11 @@ export const saveGetAllDescription: INodeProperties[] = [
 		default: 'article',
 		options: [
 			{ name: 'Article', value: 'article' },
-			{ name: 'Recipe', value: 'recipe' },
-			{ name: 'Video', value: 'video' },
 			{ name: 'Audio', value: 'audio' },
 			{ name: 'Image', value: 'image' },
 			{ name: 'Other', value: 'other' },
+			{ name: 'Recipe', value: 'recipe' },
+			{ name: 'Video', value: 'video' },
 		],
 		displayOptions: {
 			show: showOnlyFor,

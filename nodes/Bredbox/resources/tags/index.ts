@@ -37,7 +37,7 @@ export const tagDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 's',
+				name: 'S',
 				value: 'gets',
 				action: 'List saves for a specific tag',
 				description: 'List saves for a specific tag',
