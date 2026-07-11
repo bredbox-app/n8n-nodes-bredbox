@@ -1,5 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { highlightCreateDescription } from './create';
+import { highlightUpdateDescription } from './update';
 
 
 const showOnlyFor = {
@@ -62,6 +63,18 @@ export const highlightDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Update',
+				value: 'update',
+				action: 'Update a highlight',
+				description: 'Update a highlight\'s properties',
+				routing: {
+					request: {
+						method: 'PATCH',
+						url: '=/saves/{{$parameter.saveId}}/highlights/{{$parameter.highlightId}}',
+					},
+				},
+			},
 		],
 		default: 'create',
 	},
@@ -74,7 +87,7 @@ export const highlightDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['highlight'],
-			operation: ['create', 'delete', 'getAll'],
+			operation: ['create', 'delete', 'getAll', 'update'],
 		},
 	},
 	description: 'Save ID of the highlight',
@@ -88,7 +101,7 @@ export const highlightDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['highlight'],
-			operation: ['delete'],
+			operation: ['delete', 'update'],
 		},
 	},
 	description: 'Highlight ID of the highlight',
@@ -145,4 +158,5 @@ export const highlightDescription: INodeProperties[] = [
 	},
 },
 	...highlightCreateDescription,
+	...highlightUpdateDescription,
 ];
