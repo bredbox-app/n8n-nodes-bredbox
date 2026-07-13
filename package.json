@@ -1,6 +1,6 @@
 {
   "name": "@bredbox/n8n-nodes-bredbox",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "n8n community node for interacting with the Bredbox API",
   "author": {
     "name": "Nicholas C. Zakas",
