@@ -49,6 +49,13 @@ Requires n8n version 1.0 or later. Tested against the Bredbox API v2.
 
 You can configure the API base URL on the credential to point to a local Bredbox instance during development. The default is `https://api.bredbox.app/v2`.
 
+To save a URL in a workflow:
+
+1. Add a **Bredbox** node and select your **Bredbox API** credential.
+2. Set **Resource** to **Save** and **Operation** to **Create**.
+3. Enter the web address in the **URL** field.
+4. Connect the node to the rest of your workflow and execute it to create the save.
+
 ## Resources
 
 - [Bredbox](https://bredbox.app)

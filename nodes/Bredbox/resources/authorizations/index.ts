@@ -15,10 +15,10 @@ export const authorizationDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'delete_AuthorizationsDelete',
-				value: 'deleteAuthorizationsDelete',
-				action: 'Disconnect an application',
-				description: 'Disconnect an application',
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a authorization',
+				description: 'Delete a authorization permanently',
 				routing: {
 					request: {
 						method: 'DELETE',
@@ -27,10 +27,10 @@ export const authorizationDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'get_AuthorizationsList',
-				value: 'getAuthorizationsList',
-				action: 'List connected applications',
-				description: 'List connected applications',
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'Get many authorizations',
+				description: 'Retrieve authorizations with pagination',
 				routing: {
 					request: {
 						method: 'GET',
@@ -49,7 +49,7 @@ export const authorizationDescription: INodeProperties[] = [
 				},
 			},
 		],
-		default: 'deleteAuthorizationsDelete',
+		default: 'delete',
 	},
 	{
 	displayName: 'Application ID',
@@ -60,9 +60,60 @@ export const authorizationDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['authorization'],
-			operation: ['deleteAuthorizationsDelete'],
+			operation: ['delete'],
 		},
 	},
 	description: 'Application ID of the authorization',
+},
+	{
+	displayName: 'Return All',
+	name: 'returnAll',
+	type: 'boolean',
+	default: false,
+	displayOptions: {
+		show: {
+			resource: ['authorization'],
+			operation: ['getAll'],
+		},
+	},
+	description: 'Whether to return all results or only up to a given limit',
+	routing: {
+		send: {
+			paginate: '={{ $value }}',
+		},
+		operations: {
+			pagination: {
+				type: 'offset',
+				properties: {
+					limitParameter: 'per_page',
+					offsetParameter: 'page',
+					pageSize: 50,
+					type: 'query',
+				},
+			},
+		},
+	},
+},
+{
+	displayName: 'Limit',
+	name: 'limit',
+	type: 'number',
+	default: 50,
+	displayOptions: {
+		show: {
+			resource: ['authorization'],
+			operation: ['getAll'],
+		},
+	},
+	description: 'Max number of results to return',
+	typeOptions: {
+		minValue: 1,
+	},
+	routing: {
+		send: {
+			type: 'query',
+			property: 'per_page',
+		},
+	},
 },
 ];

@@ -71,6 +71,25 @@ export const saveCreateDescription: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'Tags',
+		name: 'tags',
+		type: 'string',
+		default: [],
+		typeOptions: {
+			multipleValues: true,
+		},
+		displayOptions: {
+			show: showOnlyFor,
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'tags',
+				value: '={{$value ? $value : undefined}}',
+			},
+		},
+	},
+	{
 		displayName: 'Background',
 		name: 'background',
 		type: 'boolean',

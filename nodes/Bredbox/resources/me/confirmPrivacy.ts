@@ -10,7 +10,6 @@ export const meConfirmPrivacyDescription: INodeProperties[] = [
 		displayName: 'Token',
 		name: 'token',
 		type: 'string',
-		typeOptions: { password: true },
 		required: true,
 		default: '',
 		displayOptions: {

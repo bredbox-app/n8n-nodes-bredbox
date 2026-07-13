@@ -100,6 +100,8 @@ const SUB_RESOURCE_PREFIX_MAP = {
 const OPERATION_OVERRIDES = {
   get_MeGet:               ['getProfile',    'Get Profile'],
   delete_MeDelete:         ['deleteAccount', 'Delete Account'],
+  delete_AuthorizationsDelete: ['delete', 'Delete'],
+  get_AuthorizationsList:     ['getAll', 'Get Many'],
 };
 
 /**
@@ -215,6 +217,11 @@ function getSortedEnumValues(enumValues) {
  *   { method, tag, resource, actionSuffix, prefix, value, displayName }
  */
 function parseOperationId(operationId, method) {
+  const methodPrefix = `${method}_`;
+  const operationName = operationId.startsWith(methodPrefix)
+    ? operationId.slice(methodPrefix.length)
+    : operationId;
+
   // Check overrides first
   if (OPERATION_OVERRIDES[operationId]) {
     const [value, displayName] = OPERATION_OVERRIDES[operationId];
@@ -239,21 +246,21 @@ function parseOperationId(operationId, method) {
   // e.g. post_AddCollectionItem → prefix=Add, tag=Collection, suffix=Item
   for (const [pluralTag, singularTag] of Object.entries(TAG_SINGULAR)) {
     for (const [prefix, [prefVal, prefName]] of Object.entries(SUB_RESOURCE_PREFIX_MAP)) {
-      // Check if operationId contains prefix+singularTag
-      const pattern = prefix + singularTag;
-      if (operationId.includes(pattern)) {
-        const idx = operationId.indexOf(pattern);
-        const suffix = operationId.slice(idx + pattern.length); // remaining after "AddCollection"
-        // Sub-resource operations: use the mapped value (e.g. Add → addItem)
-        return {
-          method: method.toUpperCase(),
-          tag: pluralTag,
-          resource: TAG_TO_RESOURCE[pluralTag],
-          actionSuffix: suffix || null,
-          prefix,
-          value: prefVal,
-          displayName: prefName,
-        };
+      for (const tagForm of [pluralTag, singularTag]) {
+        const pattern = prefix + tagForm;
+        if (operationName.startsWith(pattern)) {
+          const suffix = operationName.slice(pattern.length);
+          // Sub-resource operations: use the mapped value (e.g. Add → addItem)
+          return {
+            method: method.toUpperCase(),
+            tag: pluralTag,
+            resource: TAG_TO_RESOURCE[pluralTag],
+            actionSuffix: suffix || null,
+            prefix,
+            value: prefVal,
+            displayName: prefName,
+          };
+        }
       }
     }
   }
@@ -262,9 +269,8 @@ function parseOperationId(operationId, method) {
   for (const [pluralTag, singularTag] of Object.entries(TAG_SINGULAR)) {
     // Check plural first (e.g. "Saves"), then singular (e.g. "Save")
     for (const tagForm of [pluralTag, singularTag]) {
-      const idx = operationId.indexOf(tagForm);
-      if (idx >= 0) {
-        const suffix = operationId.slice(idx + tagForm.length);
+      if (operationName.startsWith(tagForm)) {
+        const suffix = operationName.slice(tagForm.length);
         if (suffix && ACTION_MAP[suffix]) {
           const [value, displayName] = ACTION_MAP[suffix];
           return {
@@ -392,7 +398,7 @@ function generatePropertyField(param, propName, n8nType, required, showCondition
   if (n8nType === 'options' && param.schema?.enum) {
     lines.push('\toptions: [');
     for (const val of getSortedEnumValues(param.schema.enum)) {
-      lines.push(`\t\t{ name: '${esc(capitalize(String(val)))}', value: '${esc(String(val))}' },`);
+      lines.push(`\t\t{ name: '${esc(humanize(String(val)))}', value: '${esc(String(val))}' },`);
     }
     lines.push('\t],');
   }
@@ -728,6 +734,11 @@ function generate(spec) {
 
   const credsContent = generateCredentials();
   writeIfChanged(join(ROOT, 'credentials', 'BredboxApi.credentials.ts'), credsContent);
+
+  // ── 7. Generate README ───────────────────────────────────────────────────
+
+  const readmeContent = generateReadme();
+  writeIfChanged(join(ROOT, 'README.md'), readmeContent);
 }
 
 // ─── TEMPLATE: Resource index.ts ──────────────────────────────────────────────
@@ -853,7 +864,7 @@ function generateOpParamFile(resource, opValue, bodyParams, queryParams) {
     if (n8nType === 'options' && schema.enum) {
       lines.push('\t\toptions: [');
       for (const val of getSortedEnumValues(schema.enum)) {
-        lines.push(`\t\t\t{ name: '${esc(capitalize(String(val)))}', value: '${esc(String(val))}' },`);
+        lines.push(`\t\t\t{ name: '${esc(humanize(String(val)))}', value: '${esc(String(val))}' },`);
       }
       lines.push('\t\t],');
     }
@@ -927,7 +938,7 @@ function generateOpParamFile(resource, opValue, bodyParams, queryParams) {
     if (n8nType === 'options' && schema.enum) {
       lines.push('\t\toptions: [');
       for (const val of getSortedEnumValues(schema.enum)) {
-        lines.push(`\t\t\t{ name: '${esc(capitalize(String(val)))}', value: '${esc(String(val))}' },`);
+        lines.push(`\t\t\t{ name: '${esc(humanize(String(val)))}', value: '${esc(String(val))}' },`);
       }
       lines.push('\t\t],');
     }
@@ -1061,10 +1072,10 @@ function generateNodeTs(resources) {
 function generateNodeJson() {
   return JSON.stringify(
     {
-      node: 'n8n-nodes-bredbox',
+      node: '@bredbox/n8n-nodes-bredbox.bredbox',
       nodeVersion: '1.0',
       codexVersion: '1.0',
-      categories: ['Development', 'Developer Tools'],
+      categories: ['Development'],
       resources: {
         credentialDocumentation: [
           {
@@ -1081,6 +1092,75 @@ function generateNodeJson() {
     null,
     '\t',
   ) + '\n';
+}
+
+// ─── TEMPLATE: README ────────────────────────────────────────────────────────
+
+function generateReadme() {
+  return `# n8n-nodes-bredbox
+
+This is an n8n community node that lets you use [Bredbox](https://bredbox.app) in your n8n workflows.
+
+Bredbox is a read-it-later and knowledge management service that lets you save, organize, annotate, and search web content. With this node you can automate managing saves, collections, highlights, tags, tokens, webhooks, and more directly from your n8n workflows.
+
+**This node requires a [Bredbox Pro](https://bredbox.app/pricing) subscription.**
+
+[n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
+
+## Installation
+
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
+
+## Operations
+
+| Resource | Operations |
+|---|---|
+| Save | Create, Delete, Get, Get Content, Get Many, Get Tags, Search, Set Tags, Update |
+| Highlight | Create, Delete, Get Many |
+| Import | Create, Get Many |
+| Export | Create, Download, Get Many |
+| Tag | Get Many, Get Saves |
+| Collection | Add Item, Create, Delete, Delete Item, Get, Get Item, Get Items, Get Many, Update, Update Item |
+| Me | Clear Data, Confirm Privacy Action, Delete Account, Get Job, Get Profile |
+| Token | Create, Delete, Get, Get Many, Get Scopes, Regenerate, Update |
+| Webhook | Create, Delete, Get, Get Events, Get Many, Update |
+| Authorization | Delete, Get Many |
+
+## Credentials
+
+### Prerequisites
+
+- A [Bredbox](https://bredbox.app) account with a **Pro subscription**.
+- An API access token generated from your Bredbox account settings.
+
+### Setup
+
+1. Open a Bredbox node in n8n.
+2. Create a new credential of type **Bredbox API**.
+3. Paste your access token into the **Access Token** field.
+4. Optionally, change the **API Base URL** if you are running a local development instance of the Bredbox API.
+
+## Compatibility
+
+Requires n8n version 1.0 or later. Tested against the Bredbox API v2.
+
+## Usage
+
+You can configure the API base URL on the credential to point to a local Bredbox instance during development. The default is \`https://api.bredbox.app/v2\`.
+
+To save a URL in a workflow:
+
+1. Add a **Bredbox** node and select your **Bredbox API** credential.
+2. Set **Resource** to **Save** and **Operation** to **Create**.
+3. Enter the web address in the **URL** field.
+4. Connect the node to the rest of your workflow and execute it to create the save.
+
+## Resources
+
+- [Bredbox](https://bredbox.app)
+- [Bredbox API documentation](https://api.bredbox.app/v2/docs)
+- [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
+`;
 }
 
 // ─── TEMPLATE: Credentials ────────────────────────────────────────────────────

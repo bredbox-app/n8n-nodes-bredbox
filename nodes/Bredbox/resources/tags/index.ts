@@ -37,10 +37,10 @@ export const tagDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'S',
-				value: 'gets',
-				action: 'List saves for a specific tag',
-				description: 'List saves for a specific tag',
+				name: 'Get Saves',
+				value: 'getSaves',
+				action: 'Get saves for tag',
+				description: 'Retrieve saves with a specific tag',
 				routing: {
 					request: {
 						method: 'GET',
@@ -70,7 +70,7 @@ export const tagDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['tag'],
-			operation: ['gets'],
+			operation: ['getSaves'],
 		},
 	},
 	description: 'Tag Name of the tag',
@@ -113,6 +113,57 @@ export const tagDescription: INodeProperties[] = [
 		show: {
 			resource: ['tag'],
 			operation: ['getAll'],
+		},
+	},
+	description: 'Max number of results to return',
+	typeOptions: {
+		minValue: 1,
+	},
+	routing: {
+		send: {
+			type: 'query',
+			property: 'per_page',
+		},
+	},
+},
+	{
+	displayName: 'Return All',
+	name: 'returnAll',
+	type: 'boolean',
+	default: false,
+	displayOptions: {
+		show: {
+			resource: ['tag'],
+			operation: ['getSaves'],
+		},
+	},
+	description: 'Whether to return all results or only up to a given limit',
+	routing: {
+		send: {
+			paginate: '={{ $value }}',
+		},
+		operations: {
+			pagination: {
+				type: 'offset',
+				properties: {
+					limitParameter: 'per_page',
+					offsetParameter: 'page',
+					pageSize: 50,
+					type: 'query',
+				},
+			},
+		},
+	},
+},
+{
+	displayName: 'Limit',
+	name: 'limit',
+	type: 'number',
+	default: 50,
+	displayOptions: {
+		show: {
+			resource: ['tag'],
+			operation: ['getSaves'],
 		},
 	},
 	description: 'Max number of results to return',
