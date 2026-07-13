@@ -128,6 +128,7 @@ export const tokenDescription: INodeProperties[] = [
 	displayName: 'Token ID',
 	name: 'tokenId',
 	type: 'string',
+	typeOptions: { password: true },
 	required: true,
 	default: '',
 	displayOptions: {
