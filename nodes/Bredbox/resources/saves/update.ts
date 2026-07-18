@@ -40,4 +40,20 @@ export const saveUpdateDescription: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Title',
+		name: 'title',
+		type: 'string',
+		default: '',
+		displayOptions: {
+			show: showOnlyFor,
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'title',
+				value: '={{$value ? $value : undefined}}',
+			},
+		},
+	},
 ];
