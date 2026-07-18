@@ -1,5 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { saveCreateDescription } from './create';
+import { saveDeleteDescription } from './delete';
 import { saveGetAllDescription } from './getAll';
 import { saveSearchDescription } from './search';
 import { saveSetTagsDescription } from './setTags';
@@ -106,6 +107,18 @@ export const saveDescription: INodeProperties[] = [
 				},
 			},
 			{
+				name: 'Restore',
+				value: 'postRestore',
+				action: 'Restore a trashed save to inbox',
+				description: 'Restore a trashed save to Inbox',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/saves/{{$parameter.saveId}}/restore',
+					},
+				},
+			},
+			{
 				name: 'Search',
 				value: 'search',
 				action: 'Search saves',
@@ -140,6 +153,18 @@ export const saveDescription: INodeProperties[] = [
 				},
 			},
 			{
+				name: 'Tags Add',
+				value: 'postTagsAdd',
+				action: 'Add tags to a specific save by ID',
+				description: 'Add tags to a specific save by ID',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/saves/{{$parameter.saveId}}/tags',
+					},
+				},
+			},
+			{
 				name: 'Update',
 				value: 'update',
 				action: 'Update a save',
@@ -163,7 +188,7 @@ export const saveDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['save'],
-			operation: ['delete', 'get', 'getContent', 'getTags', 'setTags', 'update'],
+			operation: ['delete', 'get', 'getContent', 'getTags', 'postRestore', 'setTags', 'postTagsAdd', 'update'],
 		},
 	},
 	description: 'Save ID of the save',
@@ -322,6 +347,7 @@ export const saveDescription: INodeProperties[] = [
 	},
 },
 	...saveCreateDescription,
+	...saveDeleteDescription,
 	...saveGetAllDescription,
 	...saveSearchDescription,
 	...saveSetTagsDescription,
