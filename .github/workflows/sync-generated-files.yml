@@ -61,15 +61,24 @@ jobs:
 
           EXISTING_BRANCH="$(gh pr list --state open --search "$PR_TITLE in:title" --json headRefName --jq '.[0].headRefName')"
 
+          git reset --hard HEAD
+          git clean -fd
+
           if [ -n "$EXISTING_BRANCH" ]; then
             git fetch origin "$EXISTING_BRANCH"
             git checkout -B "$EXISTING_BRANCH" "origin/$EXISTING_BRANCH"
+            git merge origin/main --no-edit || true
           else
             git checkout -B "$BRANCH_NAME"
           fi
 
+          npm run generate
+          npm run lint:fix
+
           git add -A
-          git commit -m 'fix: sync generated files'
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: sync generated files'
+          fi
           git push origin HEAD --force-with-lease
 
           if [ -n "$EXISTING_BRANCH" ]; then
