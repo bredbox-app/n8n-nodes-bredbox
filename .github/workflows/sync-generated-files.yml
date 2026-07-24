@@ -62,8 +62,10 @@ jobs:
           EXISTING_BRANCH="$(gh pr list --state open --search "$PR_TITLE in:title" --json headRefName --jq '.[0].headRefName')"
 
           if [ -n "$EXISTING_BRANCH" ]; then
+            git stash --include-untracked
             git fetch origin "$EXISTING_BRANCH"
             git checkout -B "$EXISTING_BRANCH" "origin/$EXISTING_BRANCH"
+            git stash pop
           else
             git checkout -B "$BRANCH_NAME"
           fi
