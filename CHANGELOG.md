@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.4](https://github.com/bredbox-app/n8n-nodes-bredbox/compare/n8n-nodes-bredbox-v1.0.3...n8n-nodes-bredbox-v1.0.4) (2026-07-28)
+
+
+### Bug Fixes
+
+* **ci:** avoid git commit failure when nothing to commit in sync workflow ([#11](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/11)) ([acac169](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/acac169b1b7beeebe153396929a93466e547c7dd))
+* **ci:** fix git stash conflict in sync workflow ([0b5a0b9](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/0b5a0b9e7e5beb1b11188bb9517b9767fc0b5aad))
+* sync generated files ([cebd484](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/cebd4843a9797980b81d3f95ddba81378340d2e1))
+* Sync with live API ([#12](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/12)) ([cebd484](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/cebd4843a9797980b81d3f95ddba81378340d2e1))
+* Sync with live API ([#7](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/7)) ([20d4a51](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/20d4a51c95887cae2f902a06157c078f17a1b429))
+
 ## [1.0.3](https://github.com/bredbox-app/n8n-nodes-bredbox/compare/n8n-nodes-bredbox-v1.0.2...n8n-nodes-bredbox-v1.0.3) (2026-07-13)
 
 
