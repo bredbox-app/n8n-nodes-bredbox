@@ -76,6 +76,30 @@ export const meDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Interests Get',
+				value: 'getInterestsGet',
+				action: 'Get current user interests',
+				description: 'Returns the authenticated user\'s selected topic interest slugs. Requires the `user:read` scope and the `read` entitlement.',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '/me/interests',
+					},
+				},
+			},
+			{
+				name: 'Interests Put',
+				value: 'putInterestsPut',
+				action: 'Set current user interests',
+				description: 'Replaces the authenticated user\'s selected topic interests. Input is normalized to lowercase and de-duplicated before persistence. Requires the `user:write` scope and the `write` entitlement.',
+				routing: {
+					request: {
+						method: 'PUT',
+						url: '/me/interests',
+					},
+				},
+			},
 		],
 		default: 'clearData',
 	},
