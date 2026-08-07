@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.5](https://github.com/bredbox-app/n8n-nodes-bredbox/compare/n8n-nodes-bredbox-v1.0.4...n8n-nodes-bredbox-v1.0.5) (2026-08-07)
+
+
+### Bug Fixes
+
+* Generator errors ([#13](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/13)) ([cdbe9cf](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/cdbe9cf47b9d2593ce98e5f580a10735a372f213))
+* sync generated files ([38bafaf](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/38bafaf655f98c7a708ccd3cd203e5b9ee55d7a2))
+* Sync with live API ([#15](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/15)) ([38bafaf](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/38bafaf655f98c7a708ccd3cd203e5b9ee55d7a2))
+
 ## [1.0.4](https://github.com/bredbox-app/n8n-nodes-bredbox/compare/n8n-nodes-bredbox-v1.0.3...n8n-nodes-bredbox-v1.0.4) (2026-07-28)
 
 
