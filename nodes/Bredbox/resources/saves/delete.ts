@@ -9,8 +9,8 @@ export const saveDeleteDescription: INodeProperties[] = [
 	{
 		displayName: 'Permanent',
 		name: 'permanent',
-		type: 'string',
-		default: 'false',
+		type: 'boolean',
+		default: false,
 		displayOptions: {
 			show: showOnlyFor,
 		},
