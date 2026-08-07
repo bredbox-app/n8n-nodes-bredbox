@@ -1,5 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { meConfirmPrivacyDescription } from './confirmPrivacy';
+import { mePutInterestsPutDescription } from './putInterestsPut';
 
 
 const showOnlyFor = {
@@ -118,4 +119,5 @@ export const meDescription: INodeProperties[] = [
 	description: 'Job ID of the me',
 },
 	...meConfirmPrivacyDescription,
+	...mePutInterestsPutDescription,
 ];

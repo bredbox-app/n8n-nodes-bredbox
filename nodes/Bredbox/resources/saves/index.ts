@@ -4,6 +4,7 @@ import { saveDeleteDescription } from './delete';
 import { saveGetAllDescription } from './getAll';
 import { saveSearchDescription } from './search';
 import { saveSetTagsDescription } from './setTags';
+import { savePostTagsAddDescription } from './postTagsAdd';
 import { saveUpdateDescription } from './update';
 
 
@@ -351,5 +352,6 @@ export const saveDescription: INodeProperties[] = [
 	...saveGetAllDescription,
 	...saveSearchDescription,
 	...saveSetTagsDescription,
+	...savePostTagsAddDescription,
 	...saveUpdateDescription,
 ];

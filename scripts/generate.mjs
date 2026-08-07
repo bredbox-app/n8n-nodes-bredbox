@@ -136,8 +136,27 @@ const RESOURCE_DIRS = {
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 
+/**
+ * Normalize an OpenAPI schema so the rest of the generator can rely on `type`
+ * being a single string. JSON Schema allows `type` to be an array — the spec
+ * uses the nullable form `["boolean", "null"]` — which would otherwise miss
+ * every `schema.type === '…'` check and silently degrade to a string field.
+ */
+function normalizeSchema(schema) {
+  if (!schema || typeof schema !== 'object') return schema;
+  const normalized = { ...schema };
+  if (Array.isArray(normalized.type)) {
+    normalized.type = normalized.type.find((t) => t !== 'null') ?? 'string';
+  }
+  if (normalized.items) {
+    normalized.items = normalizeSchema(normalized.items);
+  }
+  return normalized;
+}
+
 /** Convert an OpenAPI schema type to an n8n property type string */
-function schemaToN8nType(schema) {
+function schemaToN8nType(rawSchema) {
+  const schema = normalizeSchema(rawSchema);
   if (!schema) return 'string';
   if (schema.enum) return 'options';
   if (schema.type === 'boolean') return 'boolean';
@@ -680,19 +699,22 @@ function generate(spec) {
         const schema = op.requestBody.content['application/json'].schema;
         const required = schema.required || [];
         for (const [name, propSchema] of Object.entries(schema.properties)) {
-          bodyParams.push({ name, schema: propSchema, required: required.includes(name) });
+          bodyParams.push({ name, schema: normalizeSchema(propSchema), required: required.includes(name) });
         }
       }
+
+      // Bodies that are not objects (e.g. a bare JSON array) map to one field
+      const rootBodyParam = detectRootBodyParam(op, pathStr);
 
       // Query parameters (excluding pagination: page, per_page)
       const queryParams = [];
       for (const qp of (op.parameters || []).filter(p => p.in === 'query' && p.name !== 'page' && p.name !== 'per_page')) {
-        queryParams.push({ name: qp.name, schema: qp.schema || {}, required: qp.required || false, description: qp.description || '' });
+        queryParams.push({ name: qp.name, schema: normalizeSchema(qp.schema || {}), required: qp.required || false, description: qp.description || '' });
       }
 
       // Generate a separate .ts file if there are body params or non-pagination query params
-      if (bodyParams.length > 0 || queryParams.length > 0) {
-        const fileContent = generateOpParamFile(resource, opValue, bodyParams, queryParams);
+      if (bodyParams.length > 0 || queryParams.length > 0 || rootBodyParam) {
+        const fileContent = generateOpParamFile(resource, opValue, bodyParams, queryParams, rootBodyParam);
         bodyOpFiles.push([opValue, fileContent]);
       }
     }
@@ -808,9 +830,103 @@ function generateResourceIndex(resource, operationOptions, sharedPathFields, pag
   return lines.join('\n');
 }
 
+// ─── ROOT-LEVEL REQUEST BODIES ───────────────────────────────────────────────
+
+/**
+ * Detect a request body that is *not* a JSON object with named properties —
+ * e.g. `PUT /me/interests` and `POST /saves/{saveId}/tags`, which both take a
+ * bare JSON array as the whole body. These have no `schema.properties` to walk,
+ * so without special handling the operation ends up with no inputs at all.
+ *
+ * Returns a descriptor for a single field that supplies the entire body, or
+ * `null` when the body is a normal object (handled as individual body params).
+ */
+function detectRootBodyParam(op, pathStr) {
+  const schema = normalizeSchema(op.requestBody?.content?.['application/json']?.schema);
+  if (!schema) return null;
+  if (schema.properties || schema.type === 'object') return null;
+
+  // Name the field after the last static path segment: /me/interests → interests
+  const staticSegments = pathStr.split('/').filter((s) => s && !s.startsWith('{'));
+  const rawName = staticSegments[staticSegments.length - 1] || 'body';
+
+  return {
+    name: camelCase(rawName),
+    schema,
+    required: op.requestBody?.required === true,
+    description: schema.description || op.requestBody?.description || op.summary || '',
+  };
+}
+
+/**
+ * Generate the field that supplies an entire root-level request body.
+ *
+ * `routing.send` can only target a *property* of the body, so it cannot express
+ * "this value is the body". Property-level `routing.request.body` can: n8n
+ * resolves expressions there with `$value` bound to the field's value.
+ */
+function generateRootBodyField({ name, schema, required, description }) {
+  const n8nType = schemaToN8nType(schema);
+  const isArray = schema.type === 'array';
+  const lines = [];
+
+  lines.push('\t{');
+  lines.push(`\t\tdisplayName: '${esc(humanize(name))}',`);
+  lines.push(`\t\tname: '${esc(name)}',`);
+  lines.push(`\t\ttype: '${n8nType}',`);
+  if (required) {
+    lines.push('\t\trequired: true,');
+  }
+
+  if (isArray) {
+    lines.push('\t\tdefault: [],');
+  } else if (n8nType === 'boolean') {
+    lines.push(`\t\tdefault: ${schema.default ?? false},`);
+  } else if (n8nType === 'number') {
+    lines.push(`\t\tdefault: ${schema.default ?? 0},`);
+  } else if (n8nType === 'json') {
+    lines.push('\t\tdefault: {},');
+  } else if (n8nType === 'options') {
+    lines.push(`\t\tdefault: '${esc(String(schema.default ?? schema.enum?.[0] ?? ''))}',`);
+  } else {
+    lines.push(`\t\tdefault: '${schema.default === undefined ? '' : esc(String(schema.default))}',`);
+  }
+
+  if (description) {
+    lines.push(`\t\tdescription: '${esc(description)}',`);
+  }
+
+  if (n8nType === 'options' && schema.enum) {
+    lines.push('\t\toptions: [');
+    for (const val of getSortedEnumValues(schema.enum)) {
+      lines.push(`\t\t\t{ name: '${esc(humanize(String(val)))}', value: '${esc(String(val))}' },`);
+    }
+    lines.push('\t\t],');
+  }
+
+  // Arrays of strings render as a repeatable list of text inputs
+  if (isArray && n8nType === 'string') {
+    lines.push('\t\ttypeOptions: {');
+    lines.push('\t\t\tmultipleValues: true,');
+    lines.push('\t\t},');
+  }
+
+  lines.push('\t\tdisplayOptions: {');
+  lines.push('\t\t\tshow: showOnlyFor,');
+  lines.push('\t\t},');
+  lines.push('\t\trouting: {');
+  lines.push('\t\t\trequest: {');
+  lines.push("\t\t\t\tbody: '={{ $value }}',");
+  lines.push('\t\t\t},');
+  lines.push('\t\t},');
+  lines.push('\t},');
+
+  return lines.join('\n');
+}
+
 // ─── TEMPLATE: Operation param file (e.g. saves/create.ts, saves/search.ts) ───
 
-function generateOpParamFile(resource, opValue, bodyParams, queryParams) {
+function generateOpParamFile(resource, opValue, bodyParams, queryParams, rootBodyParam) {
   const exportName = `${resource}${capitalize(opValue)}Description`;
   const lines = [];
   lines.push("import type { INodeProperties } from 'n8n-workflow';");
@@ -968,6 +1084,11 @@ function generateOpParamFile(resource, opValue, bodyParams, queryParams) {
     lines.push('\t\t\t},');
     lines.push('\t\t},');
     lines.push('\t},');
+  }
+
+  // Root-level body (the value *is* the body, not a property of it)
+  if (rootBodyParam) {
+    lines.push(generateRootBodyField(rootBodyParam));
   }
 
   lines.push('];');
