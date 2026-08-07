@@ -1,6 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { saveCreateDescription } from './create';
 import { saveDeleteDescription } from './delete';
+import { saveGetContentDescription } from './getContent';
 import { saveGetAllDescription } from './getAll';
 import { saveSearchDescription } from './search';
 import { saveSetTagsDescription } from './setTags';
@@ -349,6 +350,7 @@ export const saveDescription: INodeProperties[] = [
 },
 	...saveCreateDescription,
 	...saveDeleteDescription,
+	...saveGetContentDescription,
 	...saveGetAllDescription,
 	...saveSearchDescription,
 	...saveSetTagsDescription,
