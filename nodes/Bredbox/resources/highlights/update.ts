@@ -10,7 +10,6 @@ export const highlightUpdateDescription: INodeProperties[] = [
 		displayName: 'Start Path',
 		name: 'start_path',
 		type: 'json',
-		required: true,
 		default: {},
 		displayOptions: {
 			show: showOnlyFor,
@@ -27,7 +26,6 @@ export const highlightUpdateDescription: INodeProperties[] = [
 		displayName: 'Start Offset',
 		name: 'start_offset',
 		type: 'number',
-		required: true,
 		default: 0,
 		typeOptions: { minValue: 0 },
 		displayOptions: {
@@ -45,7 +43,6 @@ export const highlightUpdateDescription: INodeProperties[] = [
 		displayName: 'End Path',
 		name: 'end_path',
 		type: 'json',
-		required: true,
 		default: {},
 		displayOptions: {
 			show: showOnlyFor,
@@ -62,7 +59,6 @@ export const highlightUpdateDescription: INodeProperties[] = [
 		displayName: 'End Offset',
 		name: 'end_offset',
 		type: 'number',
-		required: true,
 		default: 0,
 		typeOptions: { minValue: 0 },
 		displayOptions: {
@@ -72,6 +68,22 @@ export const highlightUpdateDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'end_offset',
+				value: '={{$value ? $value : undefined}}',
+			},
+		},
+	},
+	{
+		displayName: 'Comment',
+		name: 'comment',
+		type: 'string',
+		default: '',
+		displayOptions: {
+			show: showOnlyFor,
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'comment',
 				value: '={{$value ? $value : undefined}}',
 			},
 		},

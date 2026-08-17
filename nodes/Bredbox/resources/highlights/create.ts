@@ -93,4 +93,20 @@ export const highlightCreateDescription: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Comment',
+		name: 'comment',
+		type: 'string',
+		default: '',
+		displayOptions: {
+			show: showOnlyFor,
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'comment',
+				value: '={{$value ? $value : undefined}}',
+			},
+		},
+	},
 ];
