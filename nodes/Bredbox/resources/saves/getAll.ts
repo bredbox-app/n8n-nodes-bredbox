@@ -17,6 +17,7 @@ export const saveGetAllDescription: INodeProperties[] = [
 			{ name: 'Favorites', value: 'favorites' },
 			{ name: 'Highlights', value: 'highlights' },
 			{ name: 'Inbox', value: 'inbox' },
+			{ name: 'Reading', value: 'reading' },
 			{ name: 'Trash', value: 'trash' },
 		],
 		displayOptions: {

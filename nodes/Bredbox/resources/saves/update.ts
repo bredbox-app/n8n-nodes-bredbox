@@ -56,4 +56,21 @@ export const saveUpdateDescription: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Is Read',
+		name: 'is_read',
+		type: 'boolean',
+		default: false,
+		description: 'Whether the save is read',
+		displayOptions: {
+			show: showOnlyFor,
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'is_read',
+				value: '={{$value ? $value : undefined}}',
+			},
+		},
+	},
 ];
