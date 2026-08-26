@@ -1,10 +1,12 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { saveGetByUrlDescription } from './getByUrl';
 import { saveCreateDescription } from './create';
 import { saveDeleteDescription } from './delete';
 import { saveGetContentDescription } from './getContent';
 import { saveGetAllDescription } from './getAll';
 import { saveSearchDescription } from './search';
 import { saveSetTagsDescription } from './setTags';
+import { saveGetStatusDescription } from './getStatus';
 import { savePostTagsAddDescription } from './postTagsAdd';
 import { saveUpdateDescription } from './update';
 
@@ -23,6 +25,18 @@ export const saveDescription: INodeProperties[] = [
 			show: showOnlyFor,
 		},
 		options: [
+			{
+				name: 'By Url',
+				value: 'getByUrl',
+				action: 'Get a single user save by URL',
+				description: 'Get a single user save by URL',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '/saves/by-url',
+					},
+				},
+			},
 			{
 				name: 'Create',
 				value: 'create',
@@ -155,6 +169,18 @@ export const saveDescription: INodeProperties[] = [
 				},
 			},
 			{
+				name: 'Status',
+				value: 'getStatus',
+				action: 'Check whether a URL is already saved',
+				description: 'Check whether a URL is already saved',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '/saves/status',
+					},
+				},
+			},
+			{
 				name: 'Tags Add',
 				value: 'postTagsAdd',
 				action: 'Add tags to a specific save by ID',
@@ -179,7 +205,7 @@ export const saveDescription: INodeProperties[] = [
 				},
 			},
 		],
-		default: 'create',
+		default: 'getByUrl',
 	},
 	{
 	displayName: 'Save ID',
@@ -348,12 +374,14 @@ export const saveDescription: INodeProperties[] = [
 		},
 	},
 },
+	...saveGetByUrlDescription,
 	...saveCreateDescription,
 	...saveDeleteDescription,
 	...saveGetContentDescription,
 	...saveGetAllDescription,
 	...saveSearchDescription,
 	...saveSetTagsDescription,
+	...saveGetStatusDescription,
 	...savePostTagsAddDescription,
 	...saveUpdateDescription,
 ];
