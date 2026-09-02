@@ -1,4 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { exportCreateDescription } from './create';
+
 
 const showOnlyFor = {
 	resource: ['export'],
@@ -129,4 +131,5 @@ export const exportDescription: INodeProperties[] = [
 		},
 	},
 },
+	...exportCreateDescription,
 ];
