@@ -1,6 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { meConfirmPrivacyDescription } from './confirmPrivacy';
 import { mePutInterestsPutDescription } from './putInterestsPut';
+import { mePutPersonalizationPutDescription } from './putPersonalizationPut';
 
 
 const showOnlyFor = {
@@ -101,6 +102,30 @@ export const meDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Personalization Get',
+				value: 'getPersonalizationGet',
+				action: 'Get current user personalization setting',
+				description: 'Returns whether Bredbox may generate personalized recommendations for the authenticated user. Requires the `user:read` scope and the `read` entitlement.',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '/me/personalization',
+					},
+				},
+			},
+			{
+				name: 'Personalization Put',
+				value: 'putPersonalizationPut',
+				action: 'Set current user personalization setting',
+				description: 'Turns personalized recommendations on or off for the authenticated user. Selected topics and hidden recommendations are retained either way. Requires the `user:write` scope and the `read` entitlement.',
+				routing: {
+					request: {
+						method: 'PUT',
+						url: '/me/personalization',
+					},
+				},
+			},
 		],
 		default: 'clearData',
 	},
@@ -120,4 +145,5 @@ export const meDescription: INodeProperties[] = [
 },
 	...meConfirmPrivacyDescription,
 	...mePutInterestsPutDescription,
+	...mePutPersonalizationPutDescription,
 ];
