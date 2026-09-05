@@ -1,4 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { tagPatchRenameDescription } from './patchRename';
+
 
 const showOnlyFor = {
 	resource: ['tag'],
@@ -14,6 +16,18 @@ export const tagDescription: INodeProperties[] = [
 			show: showOnlyFor,
 		},
 		options: [
+			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a tag',
+				description: 'Delete a tag permanently',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/tags/{{$parameter.tagName}}',
+					},
+				},
+			},
 			{
 				name: 'Get Many',
 				value: 'getAll',
@@ -58,8 +72,32 @@ export const tagDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Rename',
+				value: 'patchRename',
+				action: 'Rename a tag across all of your saves',
+				description: 'Rename a tag across all of your saves',
+				routing: {
+					request: {
+						method: 'PATCH',
+						url: '=/tags/{{$parameter.tagName}}',
+					},
+				},
+			},
+			{
+				name: 'Usage',
+				value: 'getUsage',
+				action: 'Count the saves carrying a tag',
+				description: 'Count the saves carrying a tag',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/tags/{{$parameter.tagName}}/usage',
+					},
+				},
+			},
 		],
-		default: 'getAll',
+		default: 'delete',
 	},
 	{
 	displayName: 'Tag Name',
@@ -70,7 +108,7 @@ export const tagDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['tag'],
-			operation: ['getSaves'],
+			operation: ['delete', 'getSaves', 'patchRename', 'getUsage'],
 		},
 	},
 	description: 'Tag Name of the tag',
@@ -177,4 +215,5 @@ export const tagDescription: INodeProperties[] = [
 		},
 	},
 },
+	...tagPatchRenameDescription,
 ];
