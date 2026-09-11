@@ -38,6 +38,7 @@ export const saveGetAllDescription: INodeProperties[] = [
 		options: [
 			{ name: 'Article', value: 'article' },
 			{ name: 'Audio', value: 'audio' },
+			{ name: 'Document', value: 'document' },
 			{ name: 'Image', value: 'image' },
 			{ name: 'Other', value: 'other' },
 			{ name: 'Recipe', value: 'recipe' },
