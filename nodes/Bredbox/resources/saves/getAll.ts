@@ -40,6 +40,7 @@ export const saveGetAllDescription: INodeProperties[] = [
 			{ name: 'Article', value: 'article' },
 			{ name: 'Audio', value: 'audio' },
 			{ name: 'Document', value: 'document' },
+			{ name: 'Email', value: 'email' },
 			{ name: 'Image', value: 'image' },
 			{ name: 'Other', value: 'other' },
 			{ name: 'Recipe', value: 'recipe' },

@@ -1,6 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { meConfirmPrivacyDescription } from './confirmPrivacy';
 import { mePutInterestsPutDescription } from './putInterestsPut';
+import { mePatchEmailInboundUpdateDescription } from './patchEmailInboundUpdate';
 import { mePutPersonalizationPutDescription } from './putPersonalizationPut';
 
 
@@ -79,6 +80,18 @@ export const meDescription: INodeProperties[] = [
 				},
 			},
 			{
+				name: 'get_EmailInboundShow',
+				value: 'getEmailInboundShow',
+				action: 'Get the current user s inbound email address',
+				description: 'Returns the authenticated user\'s active inbound email capture address for a purpose, or 404 when none has been generated. Never creates one — use `POST` to generate. Requires the `user:write` scope and the `read` entitlement.',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/me/emails/inbound/{{$parameter.purpose}}',
+					},
+				},
+			},
+			{
 				name: 'Interests Get',
 				value: 'getInterestsGet',
 				action: 'Get current user interests',
@@ -99,6 +112,18 @@ export const meDescription: INodeProperties[] = [
 					request: {
 						method: 'PUT',
 						url: '/me/interests',
+					},
+				},
+			},
+			{
+				name: 'patch_EmailInboundUpdate',
+				value: 'patchEmailInboundUpdate',
+				action: 'Update the current user s inbound email address status',
+				description: 'Updates the status of the authenticated user\'s inbound email capture address between active and disabled. Requires the `user:write` scope and the `write` entitlement, so a read-only account is refused.',
+				routing: {
+					request: {
+						method: 'PATCH',
+						url: '=/me/emails/inbound/{{$parameter.purpose}}',
 					},
 				},
 			},
@@ -126,6 +151,18 @@ export const meDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'post_EmailInboundCreate',
+				value: 'postEmailInboundCreate',
+				action: 'Generate the current user s inbound email address',
+				description: 'Generates an inbound email capture address for the authenticated user, or returns the existing one. Responds 201 when an address was created and 200 when one already existed. Requires the `user:write` scope and the `write` entitlement, so a read-only account is refused.',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/me/emails/inbound/{{$parameter.purpose}}',
+					},
+				},
+			},
 		],
 		default: 'clearData',
 	},
@@ -143,7 +180,22 @@ export const meDescription: INodeProperties[] = [
 	},
 	description: 'Job ID of the me',
 },
+	{
+	displayName: 'Purpose',
+	name: 'purpose',
+	type: 'string',
+	required: true,
+	default: '',
+	displayOptions: {
+		show: {
+			resource: ['me'],
+			operation: ['getEmailInboundShow', 'patchEmailInboundUpdate', 'postEmailInboundCreate'],
+		},
+	},
+	description: 'Purpose of the me',
+},
 	...meConfirmPrivacyDescription,
 	...mePutInterestsPutDescription,
+	...mePatchEmailInboundUpdateDescription,
 	...mePutPersonalizationPutDescription,
 ];
