@@ -14,7 +14,10 @@ export const saveGetContentDescription: INodeProperties[] = [
 		options: [
 			{ name: 'Auto', value: 'auto' },
 			{ name: 'Binary', value: 'binary' },
+			{ name: 'Converted', value: 'converted' },
 			{ name: 'HTML', value: 'html' },
+			{ name: 'Inline', value: 'inline' },
+			{ name: 'Original', value: 'original' },
 			{ name: 'Text', value: 'text' },
 		],
 		displayOptions: {

@@ -73,6 +73,22 @@ export const highlightUpdateDescription: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'Location',
+		name: 'location',
+		type: 'json',
+		default: {},
+		displayOptions: {
+			show: showOnlyFor,
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'location',
+				value: '={{$value ? $value : undefined}}',
+			},
+		},
+	},
+	{
 		displayName: 'Comment',
 		name: 'comment',
 		type: 'string',
