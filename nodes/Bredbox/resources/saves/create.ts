@@ -75,6 +75,7 @@ export const saveCreateDescription: INodeProperties[] = [
 		name: 'tags',
 		type: 'string',
 		default: [],
+		description: 'Tags for the new save; at most 10',
 		typeOptions: {
 			multipleValues: true,
 		},
