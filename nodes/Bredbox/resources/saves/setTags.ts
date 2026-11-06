@@ -12,6 +12,7 @@ export const saveSetTagsDescription: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: [],
+		description: 'The save\'s new tags, replacing all of its current tags. An empty array removes every tag.',
 		typeOptions: {
 			multipleValues: true,
 		},

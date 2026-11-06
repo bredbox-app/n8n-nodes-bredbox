@@ -184,11 +184,23 @@ export const saveDescription: INodeProperties[] = [
 				name: 'Tags Add',
 				value: 'postTagsAdd',
 				action: 'Add tags to a specific save by ID',
-				description: 'Add tags to a specific save by ID',
+				description: 'Adds tags to a save and keeps the tags it already has. Tags the save already has are ignored. Fails with 400 if the save would have more than 10 tags.',
 				routing: {
 					request: {
 						method: 'POST',
 						url: '=/saves/{{$parameter.saveId}}/tags',
+					},
+				},
+			},
+			{
+				name: 'Tags Delete',
+				value: 'deleteTagsDelete',
+				action: 'Remove a tag from a specific save by ID',
+				description: 'Remove a tag from a specific save by ID',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/saves/{{$parameter.saveId}}/tags/{{$parameter.tagName}}',
 					},
 				},
 			},
@@ -216,10 +228,24 @@ export const saveDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['save'],
-			operation: ['delete', 'get', 'getContent', 'getTags', 'postRestore', 'setTags', 'postTagsAdd', 'update'],
+			operation: ['delete', 'get', 'getContent', 'getTags', 'postRestore', 'setTags', 'postTagsAdd', 'deleteTagsDelete', 'update'],
 		},
 	},
 	description: 'Save ID of the save',
+},
+	{
+	displayName: 'Tag Name',
+	name: 'tagName',
+	type: 'string',
+	required: true,
+	default: '',
+	displayOptions: {
+		show: {
+			resource: ['save'],
+			operation: ['deleteTagsDelete'],
+		},
+	},
+	description: 'Tag Name of the save',
 },
 	{
 	displayName: 'Return All',
