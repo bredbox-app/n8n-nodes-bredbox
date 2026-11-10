@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.7](https://github.com/bredbox-app/n8n-nodes-bredbox/compare/n8n-nodes-bredbox-v1.0.6...n8n-nodes-bredbox-v1.0.7) (2026-11-06)
+
+
+### Bug Fixes
+
+* sync generated files ([67aa63c](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/67aa63c88d8dd2e18b8e448979ea099cce40f41f))
+* sync generated files ([28c840a](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/28c840ae276c45c25135dd1feea78362da64100c))
+* sync generated files ([4386b59](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/4386b5938b0c30a4bc106e85a92feefe9ab60fc9))
+* Sync with live API ([#19](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/19)) ([5e6280b](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/5e6280ba555524aded9e27c19124a7d2f7bf6d17))
+* Sync with live API ([#21](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/21)) ([4386b59](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/4386b5938b0c30a4bc106e85a92feefe9ab60fc9))
+* Sync with live API ([#22](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/22)) ([01c4e0e](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/01c4e0e5b9f7d4fc845164784a3ddb8ec0bce5aa))
+* Sync with live API ([#23](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/23)) ([28c840a](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/28c840ae276c45c25135dd1feea78362da64100c))
+* Sync with live API ([#24](https://github.com/bredbox-app/n8n-nodes-bredbox/issues/24)) ([67aa63c](https://github.com/bredbox-app/n8n-nodes-bredbox/commit/67aa63c88d8dd2e18b8e448979ea099cce40f41f))
+
 ## [1.0.6](https://github.com/bredbox-app/n8n-nodes-bredbox/compare/n8n-nodes-bredbox-v1.0.5...n8n-nodes-bredbox-v1.0.6) (2026-08-26)
 
 
