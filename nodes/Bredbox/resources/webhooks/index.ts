@@ -98,6 +98,18 @@ export const webhookDescription: INodeProperties[] = [
 				},
 			},
 			{
+				name: 'Rotate Secret',
+				value: 'postRotateSecret',
+				action: 'Rotate a webhook secret',
+				description: 'Replaces the webhook\'s signing secret with a newly generated `whsec_` secret and returns it. The old secret stops signing deliveries immediately. This is the only response other than create that includes the full `secret`. To set a secret of your own instead, send it as `secret` to PATCH /v2/webhooks/{webhookId}. Requires `webhooks:write` scope and the `developer` entitlement.',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/webhooks/{{$parameter.webhookId}}/rotate-secret',
+					},
+				},
+			},
+			{
 				name: 'Update',
 				value: 'update',
 				action: 'Update a webhook',
@@ -121,7 +133,7 @@ export const webhookDescription: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['webhook'],
-			operation: ['delete', 'get', 'update'],
+			operation: ['delete', 'get', 'postRotateSecret', 'update'],
 		},
 	},
 	description: 'Webhook ID of the webhook',

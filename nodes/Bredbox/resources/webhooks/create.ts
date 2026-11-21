@@ -45,7 +45,6 @@ export const webhookCreateDescription: INodeProperties[] = [
 		name: 'secret',
 		type: 'string',
 		typeOptions: { password: true },
-		required: true,
 		default: '',
 		displayOptions: {
 			show: showOnlyFor,
